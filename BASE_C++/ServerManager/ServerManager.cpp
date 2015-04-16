@@ -57,22 +57,41 @@ ServerManager *ServerManager::getInstance()
  * @param ID d'une cellule
  * return Liste des IDs des Assets contenus dans la cellule
  */
-QList<QUuid> ServerManager::getListIDAsset(QUuid){
-    QList<QUuid> list;
-    return list;
+SharedResourcePtr    ServerManager::getAsset(QUuid q){
+    SharedResourcePtr r;
+    //Problème lié à RessourceHolder, devant être rempli avant
+    //r = ResourceHolder::GetByUUID(q);
+
+
+
+    return r;
 }
 
 /*
  * @param ID d'un Asset
  * return liste des IDs des objets liés à l'Asset
  */
-QList<QUuid> ServerManager::getListIDObj(QUuid){
+QList<QUuid> ServerManager::getListIDObj(QUuid q){
+    SharedResourcePtr tmp;
+
+    //Problème lié à RessourceHolder, devant être rempli avant
+    //tmp = ResourceHolder::GetByUUID(q);
     QList<QUuid> list;
+
+    //Problème lié à GameEntity qui doit avoir un attribut QList<QUuid> et non pas QUuid
+    //list = tmp->getAttr("Resources");
     return list;
 }
 
-QList<QUuid> ServerManager::getListIDThings(QUuid){
+QList<QUuid> ServerManager::getListIDEntity(QUuid q){
+    SharedResourcePtr tmp;
+
+    //Problème lié à RessourceHolder, devant être rempli avant
+    //tmp = ResourceHolder::GetByUUID(q);
     QList<QUuid> list;
+
+    //Commenté en attendant les cellules de carte
+    //list = tmp->getAttr("Resources");
     return list;
 }
 
@@ -172,8 +191,8 @@ bool ServerManager::interpret(QUuid client){
                 std::cout << "Received ID_OBJ" << std::endl;
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
-                list = ServerManager::getInstance()->getListIDThings(req);
-                reponse.setType(ID_THINGIE);
+                list = ServerManager::getInstance()->getListIDEntity(req);
+                reponse.setType(ID_ENTITY);
                 for(int i = 0; i < list.size(); ++i) {
 
                     ByteBuffer tmp((unsigned char*)(list.at(i).toByteArray().data()), list.at(i).toByteArray().size());
@@ -191,7 +210,7 @@ bool ServerManager::interpret(QUuid client){
                 std::cout << "Sending TEST" << std::endl;*/
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
-                list = ServerManager::getInstance()->getListIDThings(req);
+                list = ServerManager::getInstance()->getListIDEntity(req);
                 QUuid q;
                 ByteBuffer tmp((unsigned char*)(q.toByteArray().data()), q.toByteArray().size());
                 reponse.append(tmp);
