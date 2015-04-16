@@ -95,7 +95,7 @@ public class TestMesh : MonoBehaviour {
 		str.Seek(0, SeekOrigin.Begin);
 
 		//DateTime ouverture = DateTime.Now;
-		FileStream stream1 = File.Open(@"C:\Users\Tsubaki\Desktop\suzanne.bin", FileMode.Open);
+		FileStream stream1 = File.Open(@"C:\Users\Tsubaki\Desktop\textMesh.bin", FileMode.Open);
 		//DateTime finOuvertue = DateTime.Now;
 		//Debug.Log ("temps ouverture fichier :" + (finOuvertue- ouverture));
 	
@@ -111,13 +111,13 @@ public class TestMesh : MonoBehaviour {
 
 		DateTime  createmeshdebut = DateTime.Now;
 
-		FileStream stream2 = File.Open(@"C:\Users\Tsubaki\Desktop\suzanneMat.bin", FileMode.Open);
+		FileStream stream2 = File.Open(@"C:\Users\Tsubaki\Desktop\textMat.bin", FileMode.Open);
 		MaterialCreator matCret = ResourceReader.readMaterial (stream2);
 		matCret.create (obj);
 
-		/*FileStream stream3 = File.Open(@"C:\Users\Tsubaki\Desktop\Cube2mat-MAT2.bin", FileMode.Open);
-		MaterialCreator matCret2 = ResourceReader.readMaterial (stream3);
-		matCret2.create (obj);*/		
+		//FileStream stream3 = File.Open(@"C:\Users\Tsubaki\Desktop\textImage.bin", FileMode.Open);
+		//TextureCreator TextureCreat = ResourceReader.readTexture (stream3);
+		//matCret2.create (obj);		
 
 		mc.createMesh (obj);
 
@@ -126,7 +126,7 @@ public class TestMesh : MonoBehaviour {
 		//Debug.Log ("temps create mesh :" + (createmeshdebut- createmeshfin));
 
 		stream1.Close();
-		stream2.Close ();
+		//stream2.Close ();
 		//stream3.Close ();
 		//Client.Connect("192.168.1.116", 3000, "coucou hiboux");
 	}

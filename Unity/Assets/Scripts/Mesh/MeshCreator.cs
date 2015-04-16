@@ -69,7 +69,7 @@ public class MeshCreator
 	public Mesh createMesh(GameObject objec)
 	{
 		bool has_norm = normales.Count > 0;
-		Debug.Log ("normales du mesh " + has_norm);
+		//Debug.Log ("normales du mesh " + has_norm);
 		bool has_text = textures.Count > 0;
 		List<int> triangles = new List<int>();
 		List<Vector3> norms = new List<Vector3>();
@@ -115,14 +115,14 @@ public class MeshCreator
 		//mesh.Optimize();
 
 
-		mesh.name = "default";
+		mesh.name = "test";
 		objec.AddComponent<MeshFilter> ().mesh = mesh;
 		objec.GetComponent<MeshRenderer> ().enabled = true;
 		mesh.RecalculateNormals ();
 
 		//TODO load materials
 
-		Debug.Log (normales.Count);
+		//Debug.Log (normales.Count);
 		return mesh;
 
 	}
