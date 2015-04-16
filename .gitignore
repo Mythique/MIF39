@@ -1,0 +1,10 @@
+*/CMakeFiles/*
+*/build/
+bin/*
+*/*.cmake
+*/*.user
+*CMakeCache.txt
+*.so
+*.cbp
+*Makefile
+*.autosave
