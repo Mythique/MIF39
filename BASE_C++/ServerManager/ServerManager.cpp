@@ -57,22 +57,41 @@ ServerManager *ServerManager::getInstance()
  * @param ID d'une cellule
  * return Liste des IDs des Assets contenus dans la cellule
  */
-QList<QUuid> ServerManager::getListIDAsset(QUuid){
-    QList<QUuid> list;
-    return list;
+SharedResourcePtr    ServerManager::getAsset(QUuid q){
+    SharedResourcePtr r;
+    //Problème lié à RessourceHolder, devant être rempli avant
+    //r = ResourceHolder::GetByUUID(q);
+
+
+
+    return r;
 }
 
 /*
  * @param ID d'un Asset
  * return liste des IDs des objets liés à l'Asset
  */
-QList<QUuid> ServerManager::getListIDObj(QUuid){
+QList<QUuid> ServerManager::getListIDObj(QUuid q){
+    SharedResourcePtr tmp;
+
+    //Problème lié à RessourceHolder, devant être rempli avant
+    //tmp = ResourceHolder::GetByUUID(q);
     QList<QUuid> list;
+
+    //Problème lié à GameEntity qui doit avoir un attribut QList<QUuid> et non pas QUuid
+    //list = tmp->getAttr("Resources");
     return list;
 }
 
-QList<QUuid> ServerManager::getListIDThings(QUuid){
+QList<QUuid> ServerManager::getListIDEntity(QUuid q){
+    SharedResourcePtr tmp;
+
+    //Problème lié à RessourceHolder, devant être rempli avant
+    //tmp = ResourceHolder::GetByUUID(q);
     QList<QUuid> list;
+
+    //Commenté en attendant les cellules de carte
+    //list = tmp->getAttr("Resources");
     return list;
 }
 

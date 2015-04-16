@@ -14,7 +14,7 @@ public :
     void writeToFile(EncByteBuffer& b);
     static ServerManager* getInstance();
     QList<QUuid> getListIDObj(QUuid);
-    QList<QUuid> getListIDAsset(QUuid);
+    SharedResourcePtr getAsset(QUuid);
     QList<QUuid> getListIDThings(QUuid);
     //bool configure(SimpleTcpStartPoint::Options& option);
     bool linkTcp(EncTcpStartPoint& tcp);
