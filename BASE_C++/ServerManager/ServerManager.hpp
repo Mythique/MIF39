@@ -10,12 +10,10 @@
 class ServerManager
 {
 public :
-    enum dataType {COMPRESSED=1, SHARED_R=2, ID_CHUNK=4, ID_OBJ=8, ID_ASSET=16, ID_ENTITY=32, TEST = -1};
+    enum dataType {COMPRESSED=1, SHARED_R=2, TEST = -1};
     void writeToFile(EncByteBuffer& b);
     static ServerManager* getInstance();
-    QList<QUuid> getListIDObj(QUuid);
-    SharedResourcePtr getAsset(QUuid);
-    QList<QUuid> getListIDEntity(QUuid);
+    SharedResourcePtr getRessource(QUuid);
     //bool configure(SimpleTcpStartPoint::Options& option);
     bool linkTcp(EncTcpStartPoint& tcp);
     bool startConnection();
