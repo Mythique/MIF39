@@ -113,6 +113,7 @@ bool ServerManager::interpret(QUuid client){
     requete.setType(-2);
     SharedResourcePtr res;
     QUuid req;
+    ByteBuffer resource;
     long long unsigned int l;
 
     while(requete.getType() == -2) {
