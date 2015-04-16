@@ -55,46 +55,18 @@ ServerManager *ServerManager::getInstance()
 }
 
 
-/*
- * @param ID d'une cellule
- * return Liste des IDs des Assets contenus dans la cellule
- */
-SharedResourcePtr    ServerManager::getAsset(QUuid q){
-    SharedResourcePtr r;
-    //Problème lié à RessourceHolder, devant être rempli avant
-    //r = ResourceHolder::GetByUUID(q);
 
-
-
-    return r;
-}
 
 /*
- * @param ID d'un Asset
- * return liste des IDs des objets liés à l'Asset
+ * Fonction renvoyant une ressource correspondant à l'ID passé en paramètre
+ * @param : QUuid
+ * @return : SharedResourcePtr
  */
-QList<QUuid> ServerManager::getListIDObj(QUuid q){
-    SharedResourcePtr tmp;
-
-    //Problème lié à RessourceHolder, devant être rempli avant
-    //tmp = ResourceHolder::GetByUUID(q);
-    QList<QUuid> list;
-
-    //Problème lié à GameEntity qui doit avoir un attribut QList<QUuid> et non pas QUuid
-    //list = tmp->getAttr("Resources");
-    return list;
-}
-
-QList<QUuid> ServerManager::getListIDEntity(QUuid q){
-    SharedResourcePtr tmp;
-
-    //Problème lié à RessourceHolder, devant être rempli avant
-    //tmp = ResourceHolder::GetByUUID(q);
-    QList<QUuid> list;
-
-    //Commenté en attendant les cellules de carte
-    //list = tmp->getAttr("Resources");
-    return list;
+SharedResourcePtr ServerManager::getRessource(QUuid q){
+    SharedResourcePtr reponse;
+    //Commenté en attente de la correction de ResourceHolder
+    //res= ResourceHolder::GetByUUID(q);
+    return reponse;
 }
 
 bool ServerManager::startConnection()
@@ -145,9 +117,8 @@ bool ServerManager::interpret(QUuid client){
 
     EncByteBuffer requete, reponse;
     requete.setType(-2);
-    QList<QUuid> list;
+    SharedResourcePtr res;
     QUuid req;
-    SharedResourcePtr shared;
     ByteBuffer resource;
     long long unsigned int l;
 
@@ -169,52 +140,24 @@ bool ServerManager::interpret(QUuid client){
         /*switch(requete.getType()){
 
             case ServerManager::SHARED_R :
-                std::cout << "Received SHARED_R" << std::endl;
+                std::cout << "Received Request for resource" << std::endl;
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
+                //res = ServerManager::getInstance()->getRessource(req);
                 reponse.setType(SHARED_R);
-                shared = ResourceHolder::GetByUUID(req);
-                resource = ResourceHolder::ToBuffer(shared);
-                reponse.append(resource);
+                reponse.append(res->convertToBuffer());
                 connection->send(client, reponse);
                 break;
 
-            case ServerManager::ID_CHUNK :
-                std::cout << "Received ID_CHUNK" << std::endl;
-                l = requete.getLength();
-                ::fromBuffer(requete, l, req);
-                list = ServerManager::getInstance()->getListIDObj(req);
-                reponse.setType(ID_OBJ);
-                for(int i = 0; i < list.size(); ++i) {
 
-                    ByteBuffer tmp((unsigned char*)(list.at(i).toByteArray().data()), list.at(i).toByteArray().size());
-                    reponse.append(tmp);
-                }
-                connection->send(client, reponse);
-                break;
-
-            case ServerManager::ID_OBJ :
-                std::cout << "Received ID_OBJ" << std::endl;
-                l = requete.getLength();
-                ::fromBuffer(requete, l, req);
-                list = ServerManager::getInstance()->getListIDEntity(req);
-                reponse.setType(ID_ENTITY);
-                for(int i = 0; i < list.size(); ++i) {
-
-                    ByteBuffer tmp((unsigned char*)(list.at(i).toByteArray().data()), list.at(i).toByteArray().size());
-                    reponse.append(tmp);
-                }
-                connection->send(client, reponse);
-                break;
             case ServerManager::TEST :
                 std::cout << "Received TEST" << std::endl;
             	reponse.setType(TEST);
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
-                list = ServerManager::getInstance()->getListIDEntity(req);
+                //res = ServerManager::getInstance()->getRessource(req);
                 QUuid q;
-                ByteBuffer tmp((unsigned char*)(q.toByteArray().data()), q.toByteArray().size());
-                reponse.append(tmp);
+                reponse.append(ByteBuffer((unsigned char*)(q.toByteArray().data()), q.toByteArray().size()));
                 connection->send(client, reponse);
             	std::cout << "Test reçu" <<std::endl;
                 break;
