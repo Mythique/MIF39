@@ -99,36 +99,10 @@ public class ResourceReader
 		return System.Text.Encoding.ASCII.GetString (nomByte);
 	}
 
-	public static bool readBoolean1(Stream stream)
+	public static bool readBoolean(Stream stream)
 	{
 		byte[] tailleBool = new byte[1];
 		int nbRead = stream.Read (tailleBool, 0, 1);
-		if (nbRead == 0) 
-		{
-			//Debug.Log ("end of stream bool");
-			stream.Close ();
-			return false;
-		}
-		return BitConverter.ToBoolean (tailleBool, 0);
-	}
-
-	public static bool readBoolean(Stream stream)
-	{
-		byte[] tailleBool = new byte[2];
-		int nbRead = stream.Read (tailleBool, 0, 2);
-		if (nbRead == 0) 
-		{
-			//Debug.Log ("end of stream bool");
-			stream.Close ();
-			return false;
-		}
-		return BitConverter.ToBoolean (tailleBool, 0);
-	}
-
-	public static bool readBoolean4(Stream stream)
-	{
-		byte[] tailleBool = new byte[4];
-		int nbRead = stream.Read (tailleBool, 0, 4);
 		if (nbRead == 0) 
 		{
 			//Debug.Log ("end of stream bool");
@@ -217,10 +191,10 @@ public class ResourceReader
 		Debug.Log ("read texture");
 		Guid imageID = readGuid(stream);
 		Debug.Log ("guid image : " + imageID);
-		bool blendU = readBoolean1 (stream);
-		bool blendV = readBoolean1 (stream);
-		bool CC = readBoolean1 (stream);
-		bool Clamp = readBoolean1 (stream);
+		bool blendU = readBoolean (stream);
+		bool blendV = readBoolean (stream);
+		bool CC = readBoolean (stream);
+		bool Clamp = readBoolean (stream);
 		float Base = readFloat (stream); 
 		float Gain = readFloat (stream);
 		float BumpMult = readFloat (stream);
@@ -245,7 +219,7 @@ public class ResourceReader
 
 	public static Dissolve readDissolve(Stream stream)
 	{
-		bool halo = readBoolean4(stream);
+		bool halo = readBoolean(stream);
 		float factor = readFloat(stream);
 		Debug.Log ("Dissolve " + halo  + " ," + factor);
 		return new Dissolve (halo, factor);
