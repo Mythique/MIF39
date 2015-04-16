@@ -122,6 +122,8 @@ bool ServerManager::interpret(QUuid client){
     requete.setType(-2);
     QList<QUuid> list;
     QUuid req;
+    SharedResourcePtr shared;
+    ByteBuffer resource;
     long long unsigned int l;
 
     while(requete.getType() == -2) {
@@ -140,6 +142,17 @@ bool ServerManager::interpret(QUuid client){
         std::cout << "Receiving request" << std::endl;
         std::cout << "Type " << requete.getType() << " , length " << requete.getLength() << std::endl;
         switch(requete.getType()){
+
+            case ServerManager::SHARED_R :
+                std::cout << "Received SHARED_R" << std::endl;
+                l = requete.getLength();
+                ::fromBuffer(requete, l, req);
+                reponse.setType(SHARED_R);
+                shared = ResourceHolder::GetByUUID(req);
+                resource = ResourceHolder::ToBuffer(shared);
+                reponse.append(resource);
+                connection->send(client, reponse);
+                break;
 
             case ServerManager::ID_CHUNK :
                 std::cout << "Received ID_CHUNK" << std::endl;

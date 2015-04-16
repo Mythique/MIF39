@@ -5,7 +5,7 @@
 #include "ServerManager/EncTcpStartPoint.hpp"
 #include "ServerManager/ServerManager.hpp"
 
-int main() {
+int main(int argc, char** argv) {
     QUuid fake;
     SimpleTcpStartPoint::Options options;
     options.maximumConnectedClients = 200;
@@ -21,6 +21,17 @@ int main() {
      *      Fin du client
      * Fin de la connexion
     */
+
+    std::cout << "Loading file" << std::endl;
+    FileDescriptor file ( argv[1]);
+    std::cout << "Descriptor got" << std::endl;
+    SharedResourceList ress = ResourceHolder::Load(file);
+    std::cout << "Got list" << std::endl;
+    SharedResourcePtr ptr = ress[0];
+    std::cout << "Got pointer" << std::endl;
+    QUuid quid = ptr.data()->getUUID();
+
+    std::cout << "QUuid : " << quid.toString().toStdString() << std::endl;
 
     while(true) {
         while(client == fake) {
