@@ -17,8 +17,10 @@ ServerManager::ServerManager() {
 }
 
 bool ServerManager::linkTcp(EncTcpStartPoint& tcp) {
-    if(connection != 0)
-        stopConnection();
+    std::cout << "link avant verification " << std::endl;
+    if(connection == 0)
+        while(!stopConnection()){}
+    std::cout << "link apres verification " << std::endl;
     connection = &tcp;
     return true;
 }
@@ -106,11 +108,14 @@ bool ServerManager::startConnection()
 
 bool ServerManager::stopConnection()
 {
+    bool res;
+    std::cout << "stop avant verification " << std::endl;
     if(connection != 0){
-        connection->stop();
-        return true;
+        std::cout << "stop apres verification " << std::endl;
+        res = connection->stop();
+        std::cout << "apres stop" << std::endl;
     }
-    return false;
+    return res;
 }
 
 EncTcpStartPoint *ServerManager::getConnection()
@@ -127,6 +132,7 @@ bool ServerManager::interpret(QUuid client){
     }
     if(connection == 0) {
         std::cout << "Error : no socket bound" << std::endl;
+        return false;
     }
 
     if(!connection->isStarted()){
@@ -160,7 +166,7 @@ bool ServerManager::interpret(QUuid client){
     }
         std::cout << "Receiving request" << std::endl;
         std::cout << "Type " << requete.getType() << " , length " << requete.getLength() << std::endl;
-        switch(requete.getType()){
+        /*switch(requete.getType()){
 
             case ServerManager::SHARED_R :
                 std::cout << "Received SHARED_R" << std::endl;
@@ -203,11 +209,6 @@ bool ServerManager::interpret(QUuid client){
             case ServerManager::TEST :
                 std::cout << "Received TEST" << std::endl;
             	reponse.setType(TEST);
-                /*bool t = true;
-                ByteBuffer tmp((unsigned char*)t, sizeof(bool));
-                std::cout << "Appending TEST" << std::endl;
-                reponse.append(tmp);
-                std::cout << "Sending TEST" << std::endl;*/
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
                 list = ServerManager::getInstance()->getListIDEntity(req);
@@ -216,8 +217,8 @@ bool ServerManager::interpret(QUuid client){
                 reponse.append(tmp);
                 connection->send(client, reponse);
             	std::cout << "Test reçu" <<std::endl;
-            	break;
-        }
+                break;
+        }*/
 
     return true;
 }
