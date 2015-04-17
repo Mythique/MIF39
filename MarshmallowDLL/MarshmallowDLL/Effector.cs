@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace MarshmallowDLL
+namespace intelligenceDLL
 {
-	public class MovingHuman : MonoBehaviour
+	public class Effector : MonoBehaviour
 	{
 		GameObject fire;
 		GameObject tree;
@@ -26,7 +26,7 @@ namespace MarshmallowDLL
 			hasWood = false;
 		}
 
-		public void UpdateDistance (float delta)
+		public void Updated (float delta)
 		{
 			Debug.Log ("Marc updating distance with delta : " + delta);
 

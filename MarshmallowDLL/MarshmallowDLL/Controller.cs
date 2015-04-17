@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace MarshmallowDLL
+namespace intelligenceDLL
 {
-	public class SimpleMarshmallowController
+	public class Controller
 	{
 		public FuzzyLogic.Engine theEngine;
 		public FuzzyLogicSolver.Engine theSolver;
@@ -15,7 +15,7 @@ namespace MarshmallowDLL
 		
 			theEngine.Create <FuzzyLogic.InputVariable>
 			(
-				"Name", "FeltIntensity",
+				"Name", "Input",
 				"Minimum", 0,
 				"Maximum", 1,
 				"Terms", theEngine.Create <FuzzyLogic.Curve>
@@ -34,7 +34,7 @@ namespace MarshmallowDLL
 		
 			theEngine.Create <FuzzyLogic.OutputVariable>
 			(
-				"Name", "Distance",
+				"Name", "Output",
 				"Minimum", -1,
 				"Maximum", 1,
 				"Terms", theEngine.Create<FuzzyLogic.Curve>
@@ -60,16 +60,16 @@ namespace MarshmallowDLL
 				(
 				"Expression", theEngine.Create <FuzzyLogic.Proposition>
 				(
-				"Variable", theEngine.Inputs ["FeltIntensity"],
-				"Term", theEngine.Inputs ["FeltIntensity"] ["Cold"]
+				"Variable", theEngine.Inputs ["Input"],
+				"Term", theEngine.Inputs ["Input"] ["Cold"]
 			)
 			),
 				"Consequent", theEngine.Create <FuzzyLogic.Consequent>
 				(
 				"Conclusions", theEngine.Create <FuzzyLogic.Proposition>
 				(
-				"Variable", theEngine.Outputs ["Distance"],
-				"Term", theEngine.Outputs ["Distance"] ["Closer"]
+				"Variable", theEngine.Outputs ["Output"],
+				"Term", theEngine.Outputs ["Output"] ["Closer"]
 			)
 			),
 				"Weight", 1
@@ -80,16 +80,16 @@ namespace MarshmallowDLL
 				(
 				"Expression", theEngine.Create <FuzzyLogic.Proposition>
 				(
-				"Variable", theEngine.Inputs ["FeltIntensity"],
-				"Term", theEngine.Inputs ["FeltIntensity"] ["Hot"]
+				"Variable", theEngine.Inputs ["Input"],
+				"Term", theEngine.Inputs ["Input"] ["Hot"]
 			)
 			),
 				"Consequent", theEngine.Create <FuzzyLogic.Consequent>
 				(
 				"Conclusions", theEngine.Create <FuzzyLogic.Proposition>
 				(
-				"Variable", theEngine.Outputs ["Distance"],
-				"Term", theEngine.Outputs ["Distance"] ["Further"]
+				"Variable", theEngine.Outputs ["Output"],
+				"Term", theEngine.Outputs ["Output"] ["Further"]
 			)
 			),
 				"Weight", 1
@@ -97,7 +97,7 @@ namespace MarshmallowDLL
 			);
 		}
 	
-		public SimpleMarshmallowController ()
+		public Controller ()
 		{
 			FuzzyLogicSolver.SNormFactory snormFactory = FuzzyLogicSolver.SNormFactory.Get ();
 			FuzzyLogicSolver.TNormFactory tnormFactory = FuzzyLogicSolver.TNormFactory.Get ();
@@ -112,7 +112,7 @@ namespace MarshmallowDLL
 			defuzzifierFactory.Create ("Centroid", "5")
 			);
 		
-			Debug.Log ("Created SimpleMarshmallowControler");
+			//Debug.Log ("Created SimpleMarshmallowControler");
 		}
 	
 		public void Process ()
