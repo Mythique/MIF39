@@ -112,7 +112,7 @@ public class MeshCreator
 			mesh.SetTriangles(groups[j].ToArray(),j);
 
 			// Récupération des mats du cache
-			listeMats[j] = RessourceLoader.getInstance().getMaterial(matGroup[j].getMatId());
+			listeMats[j] = ResourceLoader.getInstance().getMaterial(matGroup[j].getMatId());
 
 		}
 		mesh.SetTriangles(tsansmat.ToArray(),matGroup.Count);
