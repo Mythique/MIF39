@@ -160,8 +160,7 @@ public class ResourceReader
 		return new Triangle (m_vertexIndices, m_normalIndices, m_texcoordIndices, m_hasNormals, m_hasTexcoords);
 	}
 
-
-	public static Resource readResource (Stream stream)
+	public static void readResource (Stream stream)
 	{
 		Guid ID = readGuid (stream);
 		Debug.Log ("guid : " + ID);
@@ -173,10 +172,7 @@ public class ResourceReader
 		Debug.Log ("nom : " + nom);
 
 		Int32 dataSize = readInt32(stream);
-
-		//Debug.Log ("data size : " + dataSize);
-
-		return new Resource (ID, nom, dataSize);
+		Debug.Log ("data size : " + dataSize);
 	}
 
 	public static MaterialGroup readMaterialGroup(Stream stream)
@@ -216,7 +212,7 @@ public class ResourceReader
 		//Debug.Log ("CC image : " + CC);
 		bool Clamp = readBoolean (stream);
 		//Debug.Log ("v image : " + Clamp);
-	float Base = readFloat (stream);
+		float Base = readFloat (stream);
 		//Debug.Log ("Base image : " + Base);
 		float Gain = readFloat (stream);
 		//Debug.Log ("Gain image : " + Gain);
@@ -283,26 +279,15 @@ public class ResourceReader
 		//Debug.Log ("sharp ok" + Sharpness);
 		float OpticalDensity = readFloat (stream);
 		//Debug.Log ("optical ok" + OpticalDensity);
-		TextureCreator AmbientMa = readTexture (stream);
-		//Debug.Log ("AmbientMa");
-		Texture AmbientMap = AmbientMa.create ();
-		TextureCreator DiffuseMa = readTexture (stream);
-		//Debug.Log ("diffuseMa");
-		Texture DiffuseMap = DiffuseMa.create ();
-		TextureCreator SpecularMa= readTexture (stream);
-		Texture SpecularMap = SpecularMa.create ();
-		TextureCreator SpecularExponentMa = readTexture (stream);
-		Texture SpecularExponentMap = SpecularExponentMa.create ();
-		TextureCreator DissolveMa = readTexture (stream);
-		Texture DissolveMap = DissolveMa.create ();
-		TextureCreator DecalMa = readTexture (stream);
-		Texture DecalMap = DecalMa.create ();
-		TextureCreator DisplacementMa = readTexture (stream);
-		Texture DisplacementMap = DisplacementMa.create ();
-		TextureCreator BumpMa = readTexture (stream);
-		Texture BumpMap = BumpMa.create ();
-		TextureCreator ReflectionMa = readTexture (stream);
-		Texture ReflectionMap = ReflectionMa.create ();
+		TextureCreator AmbientMap = readTexture (stream);
+		TextureCreator DiffuseMap = readTexture (stream);
+		TextureCreator SpecularMap = readTexture (stream);
+		TextureCreator SpecularExponentMap = readTexture (stream);
+		TextureCreator DissolveMap = readTexture (stream);
+		TextureCreator DecalMap = readTexture (stream);
+		TextureCreator DisplacementMap = readTexture (stream);
+		TextureCreator BumpMap = readTexture (stream);
+		TextureCreator ReflectionMap = readTexture (stream);
 		int Illumination = readInt32(stream);
 		//Debug.Log ("Illumination : " + Illumination); 
 		//return new MaterialCreator (Diffuse, Specular, nom);

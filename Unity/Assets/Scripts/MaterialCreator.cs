@@ -15,15 +15,15 @@ public class MaterialCreator
 	float SpecularExponent;
 	float Sharpness;
 	float OpticalDensity;
-	Texture AmbientMap;
-	Texture DiffuseMap;
-	Texture SpecularMap;
-	Texture SpecularExponentMap;
-	Texture DissolveMap;
-	Texture DecalMap;
-	Texture DisplacementMap;
-	Texture BumpMap;
-	Texture ReflectionMap;
+	TextureCreator AmbientMap;
+	TextureCreator DiffuseMap;
+	TextureCreator SpecularMap;
+	TextureCreator SpecularExponentMap;
+	TextureCreator DissolveMap;
+	TextureCreator DecalMap;
+	TextureCreator DisplacementMap;
+	TextureCreator BumpMap;
+	TextureCreator ReflectionMap;
 	int Illumination;
 	
 	public MaterialCreator(ColorRGB Diffuse, ColorRGB Specular, String nom)
@@ -44,15 +44,15 @@ public class MaterialCreator
 	                       float SpecularExponent,
 	                       float Sharpness,
 	                       float OpticalDensity,
-	                       Texture AmbientMap,
-	                       Texture DiffuseMap,
-	                       Texture SpecularMap,
-	                       Texture SpecularExponentMap,
-	                       Texture DissolveMap,
-	                       Texture DecalMap,
-	                       Texture DisplacementMap,
-	                       Texture BumpMap,
-	                       Texture ReflectionMap,
+	                       TextureCreator AmbientMap,
+	                       TextureCreator DiffuseMap,
+	                       TextureCreator SpecularMap,
+	                       TextureCreator SpecularExponentMap,
+	                       TextureCreator DissolveMap,
+	                       TextureCreator DecalMap,
+	                       TextureCreator DisplacementMap,
+	                       TextureCreator BumpMap,
+	                       TextureCreator ReflectionMap,
 	                       int Illumination)
 	{
 		this.nom = nom;
@@ -78,11 +78,25 @@ public class MaterialCreator
 		this.Illumination = Illumination;
 	}
 	
-	public void create(GameObject obj)
+	public Material create()
 	{
-		obj.GetComponent<MeshRenderer> ().material = new Material (Shader.Find("Standard"));
-		obj.GetComponent<MeshRenderer> ().material.SetColor("_Color", new Color(Diffuse.getR(), Diffuse.getG(), Diffuse.getB()));
-		obj.GetComponent<MeshRenderer> ().material.SetColor("_SpecColor", new Color(Specular.getR(), Specular.getG(), Specular.getB()));
+		Material material = new Material (Shader.Find("Standard"));
+		material.SetColor("_Color", new Color(Diffuse.getR(), Diffuse.getG(), Diffuse.getB()));
+		material.SetColor("_SpecColor", new Color(Specular.getR(), Specular.getG(), Specular.getB()));
+
+		ResourceLoader.getInstance().getImage(AmbientMap.getImageID());
+		material.SetTexture("_MainText", ResourceLoader.getInstance().getImage(DiffuseMap.getImageID()));
+		ResourceLoader.getInstance().getImage(SpecularMap.getImageID());
+		ResourceLoader.getInstance().getImage(SpecularExponentMap.getImageID());
+		ResourceLoader.getInstance().getImage(DissolveMap.getImageID());
+		ResourceLoader.getInstance().getImage(DecalMap.getImageID());
+		ResourceLoader.getInstance().getImage(DisplacementMap.getImageID());
+		ResourceLoader.getInstance().getImage(BumpMap.getImageID());
+		ResourceLoader.getInstance().getImage(ReflectionMap.getImageID());
+
+		return material;
+
+
 		/*int taille = obj.GetComponent<MeshRenderer> ().materials.Length;
 		Material[] mats;
 		if (taille == 1 && obj.GetComponent<MeshRenderer> ().materials [0].name == "New Material (Instance)") 

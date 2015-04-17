@@ -21,4 +21,9 @@ public class MaterialGroup
 		this.nom = nom;
 	}
 
+	public Guid getMatId()
+	{
+		return matId;
+	}
+
 }

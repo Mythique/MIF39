@@ -66,7 +66,7 @@ public class MeshCreator
 		return -1;
 	}
 
-	public Mesh createMesh(GameObject objec)
+	public MeshStruct create()
 	{
 		bool has_norm = normales.Count > 0;
 		//Debug.Log ("normales du mesh " + has_norm);
@@ -105,24 +105,27 @@ public class MeshCreator
 		if(has_text)
 			mesh.uv = text.ToArray ();
 
+		Material[] listeMats = new Material[matGroup.Count];
+
 		mesh.subMeshCount = matGroup.Count+1;
 		for (int j=0; j<matGroup.Count; j++) {
 			mesh.SetTriangles(groups[j].ToArray(),j);
+
+			// Récupération des mats du cache
+			listeMats[j] = RessourceLoader.getInstance().getMaterial(matGroup[j].getMatId());
+
 		}
 		mesh.SetTriangles(tsansmat.ToArray(),matGroup.Count);
 		//mesh.RecalculateBounds();
 
 		//mesh.Optimize();
 
-
-		mesh.name = "test";
-		objec.AddComponent<MeshFilter> ().mesh = mesh;
-		objec.GetComponent<MeshRenderer> ().enabled = true;
+		mesh.name = id.ToString();
+		MeshRenderer meshRenderer = new MeshRenderer ();
+		meshRenderer.materials = listeMats;
 		mesh.RecalculateNormals ();
 
-		//TODO load materials
-		return mesh;
-
+		return new MeshStruct(mesh, meshRenderer);
 	}
 
 
