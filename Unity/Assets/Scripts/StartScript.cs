@@ -4,10 +4,14 @@ using System.Collections;
 
 public class StartScript : MonoBehaviour {
 
+	public string ip="192.168.1.108";
+	public int port=3000;
+	public Logger.Type logLvl=Logger.Type.NONE;
 	// Use this for initialization
 	void Start () {
-		Client.getInstance ().Connect ();
+		Client.getInstance ().Connect (ip,port);
 		Thread t = new Thread (resourceLoad);
+		Logger.logLvl = logLvl;
 		t.Start ();
 	}
 
