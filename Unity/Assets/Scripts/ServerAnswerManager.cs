@@ -7,16 +7,13 @@ using System.Collections.Generic;
 
 public class ServerAnswerManager{
 
-	enum Type : int {COMPRESSED=1, SHARED_R=2, ID_CHUNK=4, ID_OBJ=8, ID_ASSET=16, ID_THINGIE=32, TEST =225};
+	public enum Type : int {COMPRESSED=1, SHARED_R=2, ID_CHUNK=4, ID_OBJ=8, ID_ASSET=16, ID_THINGIE=32, TEST =225};
 	/*
 	 * Attributs
 	 */
 	//Instance unique
 	private static ServerAnswerManager instance;
 
-	private static Queue<List<Guid>> cellsIdQueue;
-	private static Queue<List<Guid>> assetsIdQueue;
-	private static Queue<List<Guid>> objIdQueue;
 	private Queue<byte[]> ressourceQueue;
 	private bool testResult;
 
@@ -24,9 +21,6 @@ public class ServerAnswerManager{
 	 * Méthodes
 	 */
 	private ServerAnswerManager(){
-		cellsIdQueue = new Queue<List<Guid>>();
-		assetsIdQueue = new Queue<List<Guid>>();
-		objIdQueue = new Queue<List<Guid>>();
 		ressourceQueue = new Queue<byte[]> ();
 		testResult = false;
 	}
@@ -37,37 +31,17 @@ public class ServerAnswerManager{
 			instance = new ServerAnswerManager ();
 		return instance;
 	}
+
 	public bool addContents(Stream ste){
 
-		int type, length, i;
+		int type, length;
 		type = ResourceReader.readInt32 (ste);
+		Debug.Log ("Type: "+type);
 		length = ResourceReader.readInt32 (ste);
+		Debug.Log ("Taille: "+length);
 		List<Guid> li = new List<Guid>(length);
 
 		switch (type) {
-
-		case (int)Type.ID_CHUNK:
-			for (i = 0; i < (length/38); i++) {
-				li.Add (ResourceReader.readGuid (ste));
-			}
-			cellsIdQueue.Enqueue(li);
-			break;
-		
-	
-		case (int)Type.ID_ASSET :
-			for(i = 0; i < (length/38); i++){
-				li.Add(ResourceReader.readGuid(ste));
-			}
-			assetsIdQueue.Enqueue(li);
-			break;
-		
-		case (int)Type.ID_OBJ :
-			for(i = 0; i < (length/38); i++){
-				li.Add(ResourceReader.readGuid(ste));
-			}
-			objIdQueue.Enqueue(li);
-			break;
-
 		case (int)Type.SHARED_R : 
 			byte[] contenu = new byte[length];
 			ste.Read(contenu, 0, length);
@@ -84,25 +58,7 @@ public class ServerAnswerManager{
 		}
 		return true;
 	}
-	public List<Guid> getAnswer(int type){
 
-		switch (type) {
-
-		case (int)Type.ID_CHUNK:
-			return cellsIdQueue.Dequeue ();
-			break;
-
-		case (int)Type.ID_ASSET:
-			return assetsIdQueue.Dequeue ();
-			break;
-
-		case (int) Type.ID_OBJ:
-			return objIdQueue.Dequeue ();
-			break;
-		default :
-			return new List<Guid> ();
-		}
-	}
 	public bool getAnswerTest(){
 		if (testResult) {
 			testResult = false;
@@ -114,6 +70,10 @@ public class ServerAnswerManager{
 	}
 
 	public byte[] getAnswer(){
-		return ressourceQueue.Dequeue ();
+		Debug.Log ("count: "+ressourceQueue.Count);
+		if(ressourceQueue.Count!=0)
+			return ressourceQueue.Dequeue();
+
+		return null;
 	}
 }

@@ -11,27 +11,24 @@ public class Client: MonoBehaviour
 {	
 	private static TcpClient tcpclnt;
 
-	public void ask(int type, List<Guid> param)
+	public void ask(int type,Guid param)
 	{
 		bool read = false;
 		int msgSize;
 		Stream stm = tcpclnt.GetStream();
 		byte[] t = BitConverter.GetBytes (type);
 		stm.Write (t, 0, t.Length);
-
-		foreach(Guid i in param) {
-			byte[] guid = i.ToByteArray();
-			stm.Write(guid, 0, guid.Length);
-		}
+		stm.Write (BitConverter.GetBytes(38), 0, 4);
+		byte[] guid = System.Text.Encoding.ASCII.GetBytes ("{"+param.ToString()+"}");
+		Debug.Log (System.Text.Encoding.ASCII.GetString(guid));
+		stm.Write(guid, 0, guid.Length);
+		stm.Flush ();
 		ServerAnswerManager.getInstance ().addContents (stm);
 	}
 
 	 
 	public static void Connect(string ipAdresse, int port)
 	{
-		/*bool wait = true;
-		bool lecture = false;
-		//*/
 		try 
 		{
 			tcpclnt = new TcpClient();
@@ -48,44 +45,6 @@ public class Client: MonoBehaviour
 			}
 
 			Debug.Log("Addresse okok");
-			/*Stream stm = tcpclnt.GetStream();
-			Debug.Log("Stream okok");
-
-
-			ASCIIEncoding asen= new ASCIIEncoding();
-			byte[] ba=asen.GetBytes(str);
-			byte[] size = BitConverter.GetBytes(ba.Length);
-
-			/*Debug.Log("Transmitting size of string : " + ba.Length);
-			stm.Write(size,0,size.Length);
-			Debug.Log("Transmitting string");
-			stm.Write(ba,0,ba.Length);
-
-			uint tailleMessage = 0;
-
-			while(wait)
-			{
-				Debug.Log ("en attente d'une réponse");
-				if(stm.CanRead && !lecture)
-				{
-					byte[] tailleMessageByte = new byte[4];
-					stm.Read(tailleMessageByte, 0, 4);
-					tailleMessage = BitConverter.ToUInt32(tailleMessageByte, 0);
-					Debug.Log ("taille message : " + tailleMessage);
-					lecture = true;
-				}
-				if(stm.CanRead && lecture)
-				{
-					byte[] MessageByte = new byte[tailleMessage];
-					stm.Read(MessageByte, 0, (int)tailleMessage);
-					string message = BitConverter.ToString(MessageByte,0);
-					Debug.Log ("message reçu : " + message);
-					wait = false;
-				}
-
-			}
-			tcpclnt.Close();
-			//*/
 		}
 		
 		catch (Exception e)
@@ -106,23 +65,22 @@ public class Client: MonoBehaviour
 	}
 
 	void Start(){
-		Connect("192.168.1.108", 3000);
+		Connect("192.168.1.168", 3000);
 
-		List<Guid> testList = new List<Guid>();
-		Guid testGuid = new Guid ("test");
-		testList.Add (testGuid);
-		int testType = -1;
+		//Guid testGuid = new Guid ("60633b7c-3d7e-d298-384a-22a37ecc723a");
+		//Guid testGuid = new Guid ("2c8f0939-2be1-0b49-0178-8e89bd4f6986");
+		//Guid testGuid = new Guid ("d45925f5-9829-fe00-cf43-13b6ef24e539");
 
-		bool continued = true;
+		//int testType = (int)ServerAnswerManager.Type.SHARED_R;
 
-		while(continued) 
-		{
-			ask(testType, testList);
-			if(ServerAnswerManager.getInstance().getAnswerTest()){
-				Debug.Log("Test réussi!!!!");
-				continued = false;
-			}
-		}
-		Disconnect ();
+		//bool continued = true;
+		//ask(testType, testGuid);
+		//Disconnect ();
+
 	}
+
+	void Update(){
+		ResourceLoader.getInstance().load ();
+	}
+
 }

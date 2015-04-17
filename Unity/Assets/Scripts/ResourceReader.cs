@@ -147,7 +147,7 @@ public class ResourceReader
 		return new Triangle (m_vertexIndices, m_normalIndices, m_texcoordIndices, m_hasNormals, m_hasTexcoords);
 	}
 
-	public static void readStream (Stream stream)
+	public static Resource readResource (Stream stream)
 	{
 		Guid ID = readGuid (stream);
 		//Debug.Log ("guid : " + ID);
@@ -160,6 +160,8 @@ public class ResourceReader
 
 		Int32 dataSize = readInt32(stream);
 		//Debug.Log ("data size : " + dataSize);
+
+		return new Resource (ID, nom, dataSize);
 	}
 
 	public static MaterialGroup readMaterialGroup(Stream stream)
@@ -227,7 +229,7 @@ public class ResourceReader
 	
 	public static MaterialCreator readMaterial(Stream stream)
 	{
-		readStream (stream);
+		readResource (stream);
 		//Debug.Log ("matérial créator");
 		Guid ID = readGuid (stream);
 		//Debug.Log ("guid material : " + ID);
