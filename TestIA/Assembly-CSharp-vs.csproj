@@ -46,30 +46,26 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CookingSensor.cs" />
-     <Compile Include="Assets\Fire.cs" />
-     <Compile Include="Assets\MovingHuman.cs" />
-     <Compile Include="Assets\SimpleMarshmallow.cs" />
+     <Compile Include="Assets\Scripts\IAInitializer.cs" />
+     <Compile Include="Assets\Scripts\SimpleMarshmallow.cs" />
+     <Compile Include="Assets\Scripts\WWWAssemblyLoader.cs" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water\Shaders\FXWaterPro.shader" />
-     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
-     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\WaterInclude.cginc" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
-     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="DesignPatterns">
- <HintPath>C:/Users/Unity/Documents/DepotProjet/TestIA/Assets/plugins/DesignPatterns.dll</HintPath>
+ <HintPath>C:/Users/Unity/Documents/StuffToExport/TestIA/Assets/plugins/DesignPatterns.dll</HintPath>
  </Reference>
  <Reference Include="FuzzyLogic">
- <HintPath>C:/Users/Unity/Documents/DepotProjet/TestIA/Assets/plugins/FuzzyLogic.dll</HintPath>
+ <HintPath>C:/Users/Unity/Documents/StuffToExport/TestIA/Assets/plugins/FuzzyLogic.dll</HintPath>
  </Reference>
  <Reference Include="FuzzyLogicSolver">
- <HintPath>C:/Users/Unity/Documents/DepotProjet/TestIA/Assets/plugins/FuzzyLogicSolver.dll</HintPath>
+ <HintPath>C:/Users/Unity/Documents/StuffToExport/TestIA/Assets/plugins/FuzzyLogicSolver.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
