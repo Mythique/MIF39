@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MarshmallowDLL\MovingHuman.cs">
+    <Files>
+      <File FileName="MarshmallowDLL\CookingSensor.cs" Line="37" Column="30" />
+      <File FileName="MarshmallowDLL\SimpleMarshmallowControler.cs" Line="1" Column="1" />
+      <File FileName="MarshmallowDLL\MovingHuman.cs" Line="47" Column="34" />
+      <File FileName="MarshmallowDLL\Fire.cs" Line="18" Column="30" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
