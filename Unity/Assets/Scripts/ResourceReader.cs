@@ -400,4 +400,14 @@ public class ResourceReader
 		byte[] data = readByte (stream, sizeData);
 		return new ImageCreator(width, height, depth, nbChannels, sizeData, data);
 	}
+
+	public static EntityCreator readEntity (MemoryStream memoryStream)
+	{
+		throw new NotImplementedException ();
+	}
+
+	public static ChunkCreator readChunk (MemoryStream memoryStream)
+	{
+		throw new NotImplementedException ();
+	}
 }

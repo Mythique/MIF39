@@ -8,3 +8,5 @@ bin/*
 *.cbp
 *Makefile
 *.autosave
+*.meta
+/metadata/
