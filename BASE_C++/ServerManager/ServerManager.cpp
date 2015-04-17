@@ -28,8 +28,8 @@ bool ServerManager::linkTcp(EncTcpStartPoint& tcp) {
 void ServerManager::writeToFile(EncByteBuffer& b)
 {
    unsigned char* data=b.getData();
-    if(written)
-        return;
+    //if(written)
+        //return;
 
     std::cout << std::endl;
 
@@ -119,7 +119,7 @@ bool ServerManager::interpret(QUuid client){
     requete.setType(-2);
     SharedResourcePtr res;
     QUuid req;
-    ByteBuffer resource;
+    EncByteBuffer resource;
     long long unsigned int l;
 
     while(requete.getType() == -2) {
@@ -145,8 +145,7 @@ bool ServerManager::interpret(QUuid client){
                 req = QUuid((const char*)(requete.getData()));
                 res = ServerManager::getInstance()->getRessource(req);
                 reponse.setType(SHARED_R);
-                resource = res->_toBuffer();//convertToBuffer();
-                std::cout << ResourceHolder::AllKeys().size() << std::endl;
+                resource = ResourceHolder::ToBuffer(res);
                 reponse.append(resource);
                 connection->send(client, reponse);
                 break;
