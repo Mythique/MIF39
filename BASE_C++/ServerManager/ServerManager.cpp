@@ -63,10 +63,10 @@ ServerManager *ServerManager::getInstance()
  * @return : SharedResourcePtr
  */
 SharedResourcePtr ServerManager::getRessource(QUuid q){
-    SharedResourcePtr reponse;
+    SharedResourcePtr res;
     //Commenté en attente de la correction de ResourceHolder
-    //res= ResourceHolder::GetByUUID(q);
-    return reponse;
+    res= ResourceHolder::GetByUUID(q);
+    return res;
 }
 
 bool ServerManager::startConnection()
@@ -137,15 +137,19 @@ bool ServerManager::interpret(QUuid client){
     }
         std::cout << "Receiving request" << std::endl;
         std::cout << "Type " << requete.getType() << " , length " << requete.getLength() << std::endl;
-        /*switch(requete.getType()){
+        switch(requete.getType()){
 
             case ServerManager::SHARED_R :
                 std::cout << "Received Request for resource" << std::endl;
                 l = requete.getLength();
+                std::cout << "Length got " << l << std::endl;
                 ::fromBuffer(requete, l, req);
-                //res = ServerManager::getInstance()->getRessource(req);
+                std::cout << "Getting resource " << std::endl;
+                res = ServerManager::getInstance()->getRessource(req);
+                std::cout << "Resource got " << std::endl;
                 reponse.setType(SHARED_R);
                 reponse.append(res->convertToBuffer());
+                std::cout << "Resource converted" << std::endl;
                 connection->send(client, reponse);
                 break;
 
@@ -155,13 +159,13 @@ bool ServerManager::interpret(QUuid client){
             	reponse.setType(TEST);
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
-                //res = ServerManager::getInstance()->getRessource(req);
+                res = ServerManager::getInstance()->getRessource(req);
                 QUuid q;
                 reponse.append(ByteBuffer((unsigned char*)(q.toByteArray().data()), q.toByteArray().size()));
                 connection->send(client, reponse);
             	std::cout << "Test reçu" <<std::endl;
                 break;
-        }*/
+        }
 
     return true;
 }

@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     QUuid fake;
     SimpleTcpStartPoint::Options options;
     options.maximumConnectedClients = 200;
-    options.connectionPort = 3001;
+    options.connectionPort = 3000;
     EncTcpStartPoint tcp(options);
     ServerManager::getInstance()->linkTcp(tcp);
     ServerManager::getInstance()->startConnection();
@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 
 */
 
-    /*while(true) {
+    while(true) {
         while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
         }
@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
         ServerManager::getInstance()->interpret(client);
         std::cout << "Client disconnected" << std::endl;
         client = fake;
-    }*/
+    }
 
     ServerManager::getInstance()->stopConnection();
     return 0;
