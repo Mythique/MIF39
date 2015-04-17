@@ -8,91 +8,9 @@ using System.IO;
 public class TestMesh : MonoBehaviour {
 
 	// Use this for initialization
-	public GameObject obj;
-	void Start () {
-		/*List<Vector3> vertice = new List<Vector3> ();
-		vertice.Add(new Vector3(0f,0f,0f));
-		vertice.Add(new Vector3(1f,0f,0f));
-		vertice.Add(new Vector3(0f,1f,0f));
-		vertice.Add(new Vector3(1f,1f,0f));
-
-		List<Vector3> norms = new List<Vector3> ();
-		norms.Add(new Vector3(0f,0f,1f));
-
-		List<Vector2> textures = new List<Vector2> ();
-		textures.Add(new Vector2(0f,0f));
-
-		int[] v = {0,1,2};
-		int[] vn = {0,0,0};
-		Triangle t=new Triangle(v,vn,vn);
-
-		int[] v2 = {1,3,2};
-		int[] vn2 = {0,0,0};
-		Triangle t2=new Triangle(v2,vn2,vn2);
-
-		List<Triangle> triangles = new List<Triangle> ();
-		triangles.Add(t);
-		triangles.Add(t2);
-
-		MeshCreator crea = new MeshCreator (vertice, triangles, norms, textures);
-		Mesh me=crea.createMesh();*/
-
-		/*Mesh m = new Mesh ();
-		List<Vector3> norms = new List<Vector3>();
-		List<Vector3> vers = new List<Vector3>();
-		List<Vector2> text = new List<Vector2>();
-
-		List<Vector3> vertice = new List<Vector3> ();
-		vertice.Add(new Vector3(0f,0f,0f));
-		vertice.Add(new Vector3(1f,0f,0f));
-		vertice.Add(new Vector3(0f,1f,0f));
-		vertice.Add(new Vector3(1f,1f,0f));
-
-		norms.Add(new Vector3(0f,0f,1f));
-		norms.Add(new Vector3(0f,0f,1f));
-		norms.Add(new Vector3(0f,0f,1f));
-		norms.Add(new Vector3(0f,0f,1f));
-
-		text.Add (new Vector2 (0f, 0f));
-		text.Add (new Vector2 (1f, 0f));
-		text.Add (new Vector2 (0f, 1f));
-		text.Add (new Vector2 (1f, 1f));
-
-		m.vertices = vertice.ToArray ();
-		m.normals = norms.ToArray();
-		m.uv = text.ToArray ();
-
-		int[] v = {0,1,2};
-		int[] v2 = {1,3,2};
-
-		int[] triangles = {0,1,2,1,3,2};
-		m.triangles = triangles;
-		m.subMeshCount = 2;
-		m.SetTriangles (v, 0);
-		m.SetTriangles (v2, 1);
-
-		obj.AddComponent<MeshFilter> ().mesh = m;
-		obj.GetComponent<MeshRenderer> ().enabled = true;*/
-		//obj.GetComponent<Renderer> ().material.color = Color.white;
-
-
-
-
-		byte[] b = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15};
-		Guid guid = new Guid (b);
-		Int32 sizeName = 6;
-		String name = "coucou";
-		Int32 sizeData = 42;
-
-		Stream str = new MemoryStream();
-		byte[] bytes = System.Text.Encoding.ASCII.GetBytes ("{"+guid.ToString()+"}");
-		str.Write (bytes, 0, 38);
-		str.Write (BitConverter.GetBytes (sizeName), 0, 4);
-		bytes = System.Text.Encoding.ASCII.GetBytes (name);
-		str.Write (bytes, 0, sizeName);
-		str.Write (BitConverter.GetBytes (sizeData), 0, 4);    
-		str.Flush ();
-		str.Seek(0, SeekOrigin.Begin);
+	void Start () 
+	{
+		GameObject obj = new GameObject("obj");
 
 		//DateTime ouverture = DateTime.Now;
 		FileStream stream1 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereMesh.bin", FileMode.Open);
@@ -110,6 +28,7 @@ public class TestMesh : MonoBehaviour {
 		//Debug.Log ("temps readmesh :" + (readmeshdebut- readmeshfin));
 
 		DateTime  createmeshdebut = DateTime.Now;
+		mc.createMesh (obj);
 
 		FileStream stream2 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereMat.bin", FileMode.Open);
 		MaterialCreator matCret = ResourceReader.getInstance().readMaterial (stream2);
@@ -119,7 +38,7 @@ public class TestMesh : MonoBehaviour {
 		ImageCreator imageCreat = ResourceReader.getInstance().readImage (stream3);
 		imageCreat.create (obj);		
 
-		mc.createMesh (obj);
+
 
 		//reverse(obj)
 		DateTime  createmeshfin = DateTime.Now;

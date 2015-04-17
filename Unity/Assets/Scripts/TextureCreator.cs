@@ -40,8 +40,8 @@ public class TextureCreator
 		this.Channel = Channel;
 	}
 
-	public Texture create ()
+	public Guid getImageID()
 	{
-		return new Texture();
+		return imageID;
 	}
 }
