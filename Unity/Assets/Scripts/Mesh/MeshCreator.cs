@@ -121,8 +121,6 @@ public class MeshCreator
 		mesh.RecalculateNormals ();
 
 		//TODO load materials
-
-		//Debug.Log (normales.Count);
 		return mesh;
 
 	}

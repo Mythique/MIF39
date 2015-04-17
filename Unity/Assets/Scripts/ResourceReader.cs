@@ -99,6 +99,19 @@ public class ResourceReader
 		return System.Text.Encoding.ASCII.GetString (nomByte);
 	}
 
+	public static byte[] readByte(Stream stream, int size){
+		byte[] nomByte = new byte[size];
+		int nbRead = stream.Read (nomByte, 0, size);
+		if (nbRead == 0) 
+		{
+			//Debug.Log ("end of stream nom");
+			stream.Close ();
+			return nomByte;
+		}
+		
+		return nomByte;
+	}
+
 	public static bool readBoolean(Stream stream)
 	{
 		byte[] tailleBool = new byte[1];
@@ -147,18 +160,20 @@ public class ResourceReader
 		return new Triangle (m_vertexIndices, m_normalIndices, m_texcoordIndices, m_hasNormals, m_hasTexcoords);
 	}
 
+
 	public static Resource readResource (Stream stream)
 	{
 		Guid ID = readGuid (stream);
-		//Debug.Log ("guid : " + ID);
+		Debug.Log ("guid : " + ID);
 
 		Int64 size = readInt64 (stream);
-		//Debug.Log ("size nom : " + size);
+		Debug.Log ("size nom : " + size);
 
 		String nom = readString(stream,(int) size);
-		//Debug.Log ("nom : " + nom);
+		Debug.Log ("nom : " + nom);
 
 		Int32 dataSize = readInt32(stream);
+
 		//Debug.Log ("data size : " + dataSize);
 
 		return new Resource (ID, nom, dataSize);
@@ -190,21 +205,33 @@ public class ResourceReader
 	public static TextureCreator readTexture(Stream stream)
 	{
 
-		Debug.Log ("read texture");
+		//Debug.Log ("read texture");
 		Guid imageID = readGuid(stream);
-		Debug.Log ("guid image : " + imageID);
+		//Debug.Log ("guid image : " + imageID);
 		bool blendU = readBoolean (stream);
+		//Debug.Log ("blendU image : " + blendU);
 		bool blendV = readBoolean (stream);
+		//Debug.Log ("blendV image : " + blendV);
 		bool CC = readBoolean (stream);
+		//Debug.Log ("CC image : " + CC);
 		bool Clamp = readBoolean (stream);
-		float Base = readFloat (stream); 
+		//Debug.Log ("v image : " + Clamp);
+	float Base = readFloat (stream);
+		//Debug.Log ("Base image : " + Base);
 		float Gain = readFloat (stream);
+		//Debug.Log ("Gain image : " + Gain);
 		float BumpMult = readFloat (stream);
+		//Debug.Log ("BumpMult image : " + BumpMult);
 		float Boost = readFloat (stream);;
+		//Debug.Log ("Boost image : " + Boost);
 		Int32 TexRes = readInt32 (stream);
+		//Debug.Log ("TexRes image : " + TexRes);
 		Vector3 Position = new Vector3(readFloat(stream), readFloat(stream),readFloat(stream));
+		//Debug.Log ("Position image : " + Position.x  + " " + Position.y  + " " + Position.z);
 		Vector3 Scale = new Vector3(readFloat(stream), readFloat(stream),readFloat(stream));
+		//Debug.Log ("Scale image : " + Scale.x  + " " + Scale.y  + " " + Scale.z);
 		Vector3 Turbulence = new Vector3(readFloat(stream), readFloat(stream),readFloat(stream));
+		//Debug.Log ("Turbulence image : " + Turbulence.x  + " " + Turbulence.y  + " " + Turbulence.z);
 		TextureCreator.TextureChannel Channel = (TextureCreator.TextureChannel)readInt32 (stream);
 		//return new TextureCreator ();
 		return new TextureCreator(imageID, blendU, blendV, CC, Clamp, Base, Gain, BumpMult, Boost, TexRes, Position, Scale, Turbulence, Channel);
@@ -215,7 +242,7 @@ public class ResourceReader
 		float R = readFloat (stream);
 		float G = readFloat (stream);
 		float B = readFloat (stream);
-		Debug.Log ("colorRGB : " + R + " ,"+ G + " ," + B);
+		//Debug.Log ("colorRGB : " + R + " ,"+ G + " ," + B);
 		return new ColorRGB (R, G, B);
 	}
 
@@ -223,7 +250,7 @@ public class ResourceReader
 	{
 		bool halo = readBoolean(stream);
 		float factor = readFloat(stream);
-		Debug.Log ("Dissolve " + halo  + " ," + factor);
+		//Debug.Log ("Dissolve " + halo  + " ," + factor);
 		return new Dissolve (halo, factor);
 	}
 	
@@ -251,11 +278,11 @@ public class ResourceReader
 		Dissolve Dissolve = readDissolve (stream);
 		//Debug.Log ("Dissolve ok");
 		float SpecularExponent = readFloat (stream);
-		Debug.Log ("spec ok" + SpecularExponent);
+		//Debug.Log ("spec ok" + SpecularExponent);
 		float Sharpness = readFloat (stream);
-		Debug.Log ("sharp ok" + Sharpness);
+		//Debug.Log ("sharp ok" + Sharpness);
 		float OpticalDensity = readFloat (stream);
-		Debug.Log ("optical ok" + OpticalDensity);
+		//Debug.Log ("optical ok" + OpticalDensity);
 		TextureCreator AmbientMa = readTexture (stream);
 		//Debug.Log ("AmbientMa");
 		Texture AmbientMap = AmbientMa.create ();
@@ -277,7 +304,7 @@ public class ResourceReader
 		TextureCreator ReflectionMa = readTexture (stream);
 		Texture ReflectionMap = ReflectionMa.create ();
 		int Illumination = readInt32(stream);
-		Debug.Log ("Illumination : " + Illumination); 
+		//Debug.Log ("Illumination : " + Illumination); 
 		//return new MaterialCreator (Diffuse, Specular, nom);
 		return new MaterialCreator(nom, ID, Ambient, Diffuse, Specular, Emissive, Transmission,Dissolve,SpecularExponent,Sharpness,OpticalDensity,AmbientMap,DiffuseMap,SpecularMap,SpecularExponentMap,DissolveMap,DecalMap,DisplacementMap,BumpMap,ReflectionMap,Illumination);
 	}
@@ -357,5 +384,35 @@ public class ResourceReader
 		}
 		//Debug.Log (triangleListe.Count);
 		return new MeshCreator(ID, vertices, triangleListe, normales, textures, mg);
+	}
+
+
+
+	public static ImageCreator readImage(Stream stream)
+	{
+		Debug.Log ("Lecture image--------------------------------");
+		readResource (stream);
+
+		Guid ID = readGuid (stream);
+		Debug.Log ("guid image : " + ID);
+		
+		Int64 size = readInt64 (stream);
+		Debug.Log ("size nom image : " + size);
+		
+		String nom = readString(stream,(int) size);
+		Debug.Log ("nom image : " + nom);
+
+		int width = readInt32 (stream);
+		Debug.Log ("width : " + width);
+		int height = readInt32 (stream);
+		Debug.Log ("height : " + height);
+		int depth = readInt32 (stream);
+		Debug.Log ("depth : " + depth);
+		int nbChannels = readInt32 (stream);
+		Debug.Log ("nbChannels : " + nbChannels);
+		int sizeData = width * height * depth /8;
+		Debug.Log ("sizeData : " + sizeData);
+		byte[] data = readByte (stream, sizeData);
+		return new ImageCreator(width, height, depth, nbChannels, sizeData, data);
 	}
 }
