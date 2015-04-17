@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WooddropperDLL\Fire.cs">
+    <Files>
+      <File FileName="..\..\MarshmallowDLL\MarshmallowDLL\CookingSensor.cs" Line="9" Column="37" />
+      <File FileName="WooddropperDLL\InputSensor.cs" Line="11" Column="4" />
+      <File FileName="WooddropperDLL\Fire.cs" Line="33" Column="51" />
+      <File FileName="WooddropperDLL\AIController.cs" Line="109" Column="7" />
+      <File FileName="..\..\MarshmallowDLL\MarshmallowDLL\MovingHuman.cs" Line="33" Column="53" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

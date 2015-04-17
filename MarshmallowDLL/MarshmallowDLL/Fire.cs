@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace MarshmallowDLL
+namespace intelligenceDLL
 {
 	public class Fire : MonoBehaviour
 	{
@@ -31,7 +31,7 @@ namespace MarshmallowDLL
 		
 			intensity -= factorEpuisement;
 			if (intensity < 0) {
-				transform.localScale = Vector3.zero;
+				transform.localScale = new Vector3(0.01f,0.01f,0.01f);
 				intensity = 0f;
 				//lightSrc.intensity = intensity;
 				return;

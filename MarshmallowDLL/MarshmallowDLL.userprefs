@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MarshmallowDLL\MovingHuman.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MarshmallowDLL\Controller.cs">
     <Files>
-      <File FileName="MarshmallowDLL\CookingSensor.cs" Line="37" Column="30" />
-      <File FileName="MarshmallowDLL\SimpleMarshmallowControler.cs" Line="1" Column="1" />
-      <File FileName="MarshmallowDLL\MovingHuman.cs" Line="47" Column="34" />
-      <File FileName="MarshmallowDLL\Fire.cs" Line="18" Column="30" />
+      <File FileName="MarshmallowDLL\Sensor.cs" Line="8" Column="20" />
+      <File FileName="MarshmallowDLL\Effector.cs" Line="12" Column="7" />
+      <File FileName="MarshmallowDLL\Fire.cs" Line="4" Column="11" />
+      <File FileName="MarshmallowDLL\Controller.cs" Line="8" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

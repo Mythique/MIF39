@@ -61,8 +61,9 @@ public class Effector
 
 public class SimpleMarshmallow : MonoBehaviour
 {
-	public GameObject marshmallow;
-	public GameObject marc;
+	GameObject marshmallow;
+	GameObject marc;
+	public GameObject Chamallow;
 	public float threshold = 0.01f;
 	public float oldSensorValue = -1.0f;
 	public float currentSensorValue = -1.0f;
@@ -78,48 +79,56 @@ public class SimpleMarshmallow : MonoBehaviour
 
 	void Start ()
 	{
-		Assembly a = Assembly.LoadFile (@"C:\Users\Unity\Documents\StuffToExport\MarshmallowDLL\MarshmallowDLL\bin\Debug\MarshmallowDLL.dll");
+		Assembly a = Assembly.LoadFile (@"C:\Users\Unity\Desktop\Temp\MIF39\MarshmallowDLL\MarshmallowDLL\bin\Debug\MarshmallowDLL.dll");
 
-		object o = a.CreateInstance ("MarshmallowDLL.SimpleMarshmallowController");
+		object o = a.CreateInstance ("intelligenceDLL.Controller");
 
-		Type type = a.GetType ("MarshmallowDLL.SimpleMarshmallowController");
+		Type type = a.GetType ("intelligenceDLL.Controller");
 
 		engine = (FuzzyLogic.Engine) type.GetField ("theEngine").GetValue (o);
 		solver = (FuzzyLogicSolver.Engine)type.GetField ("theSolver").GetValue (o);
 
-		controlledDistance.Input = engine.Outputs ["Distance"];
+		controlledDistance.Input = engine.Outputs ["Output"];
 
-		GameObject.FindGameObjectWithTag("Fire").AddComponent(a.GetType("MarshmallowDLL.Fire"));
+		GameObject.FindGameObjectWithTag("Fire").AddComponent(a.GetType("intelligenceDLL.Fire"));
 
 		wood = createWood ();
 		
 		marc = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		marshmallow = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-		
+		//marshmallow = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+		marshmallow = Instantiate (Chamallow);
+
+		GameObject stick = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
+
+		stick.transform.SetParent (marc.transform);
+		stick.transform.position = new Vector3 (-0.209f, 0.393f, 0.76f);
+		stick.transform.localScale = new Vector3 (0.1f,0.3f,0.1f);
+		stick.transform.Rotate (new Vector3 (90f, 0f, 0f));
+
 		marc.AddComponent<Rigidbody> ();
 		
 		marshmallow.transform.SetParent (marc.transform);
 		
 		marc.transform.position = new Vector3 (1, 0, 0);
-		marshmallow.transform.position = new Vector3 (-0.026f, 0.063f, 0.711f);
-		marshmallow.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
 
-		Type movingHuman = a.GetType ("MarshmallowDLL.MovingHuman");
+		marshmallow.transform.GetChild(0).position = new Vector3 (1.664f, 0.634f, 0.773f);
+		marshmallow.transform.GetChild(0).localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+		marshmallow.transform.GetChild(0).Rotate (new Vector3 (0, 0, 90));
+
+		Type movingHuman = a.GetType ("intelligenceDLL.Effector");
 
 		marc.AddComponent(movingHuman);
 
-		controlledDistance.mInfo = marc.GetComponent (movingHuman).GetType ().GetMethod ("UpdateDistance");
+		controlledDistance.mInfo = marc.GetComponent (movingHuman).GetType ().GetMethod ("Updated");
 
 		controlledDistance.obj = marc.GetComponent (movingHuman);
 
-		Type cookingSensor = a.GetType ("CookingSensor");
+		Type cookingSensor = a.GetType ("intelligenceDLL.Sensor");
 
 		marshmallow.AddComponent (cookingSensor);
 
-		FieldInfo controllerFi = cookingSensor.GetField ("controller");
+		Component c = marshmallow.GetComponent ("Sensor");
 
-		Component c = marshmallow.GetComponent ("CookingSensor");
-	
 		MethodInfo sensorValInfo = this.GetType ().GetMethod ("sensorValueChanged");
 
 		FieldInfo controller = c.GetType ().GetField ("controllerMethod");
@@ -151,7 +160,7 @@ public class SimpleMarshmallow : MonoBehaviour
 
 		float newInput = v - requiredValue;
 
-		engine.Inputs ["FeltIntensity"].Value = newInput;
+		engine.Inputs ["Input"].Value = newInput;
 		//controller.theEngine.Inputs ["lol ca marche pas normalement"].Value = v - requiredValue;
 		Debug.Log ("Sensor value : " + newInput);
 		oldSensorValue = v;
