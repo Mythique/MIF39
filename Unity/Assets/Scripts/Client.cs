@@ -7,10 +7,45 @@ using System.Net;
 using System.Text;
 using System.Net.Sockets;
 
-public class Client: MonoBehaviour
+/*
+ * Class Client
+ * représentant un client de connection au serveur
+ * class implémentant un patern Singleton thread safe
+ * Il ne peut etre créé qu'une seule instance de cette classe à la fois
+ */
+public sealed class Client: MonoBehaviour
 {	
+	/*
+	 * instanciation unique de la classe
+	 */
+	private static readonly Client instance = new Client();
+
+	/*
+	 * Constructeur privé (à ne pas essayer d'appeler)
+	 */
+	static Client (){
+	}
+
+	/*
+	 * Méthode de récupération de l'instance unique
+	 * @param : 
+	 * @return : Client (instance du client)
+	 */
+	public static Client getInstance(){
+
+		return instance;
+	}
+
+	/*
+	 * attribut privé contenant un client tcp pour permettre la connection
+	 */
 	private static TcpClient tcpclnt;
 
+	/*
+	 * Méthode de demande de ressource au serveur
+	 * @param : int (type de la demande), Guid (uid de la ressource demandée)
+	 * @return : void
+	 */
 	public void ask(int type,Guid param)
 	{
 		bool read = false;
@@ -26,7 +61,11 @@ public class Client: MonoBehaviour
 		ServerAnswerManager.getInstance ().addContents (stm);
 	}
 
-	 
+	/*
+	 * Méthode de connexion au serveur
+	 * @param : string (adresse IP du serveur), int (numéro de port à atteindre)
+	 * @return : void
+	 */
 	public static void Connect(string ipAdresse, int port)
 	{
 		try 
@@ -53,6 +92,11 @@ public class Client: MonoBehaviour
 		}
 	}
 
+	/*
+	 * Méthode de déconnexion au serveur
+	 * @param :
+	 * @return : void
+	 */
 	public static void Disconnect() {
 		try 
 		{
@@ -60,10 +104,15 @@ public class Client: MonoBehaviour
 		}
 		catch(Exception e)
 		{
-			Debug.Log("Error disconnecting");
+			Debug.Log("Error disconnecting : " + e.ToString());
 		}
 	}
 
+	/*
+	 * Méthode de lancement du client
+	 * @param :
+	 * @return : void
+	 */
 	void Start(){
 		Connect("192.168.1.168", 3000);
 
@@ -79,6 +128,9 @@ public class Client: MonoBehaviour
 
 	}
 
+	/*
+	 * Méthode de mise à jour du RessourceLoader
+	 */
 	void Update(){
 		ResourceLoader.getInstance().load ();
 	}
