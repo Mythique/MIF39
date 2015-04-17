@@ -95,12 +95,12 @@ public class TestMesh : MonoBehaviour {
 		str.Seek(0, SeekOrigin.Begin);
 
 		//DateTime ouverture = DateTime.Now;
-		FileStream stream1 = File.Open(@"C:\Users\Tsubaki\Desktop\textMesh.bin", FileMode.Open);
+		FileStream stream1 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereMesh.bin", FileMode.Open);
 		//DateTime finOuvertue = DateTime.Now;
 		//Debug.Log ("temps ouverture fichier :" + (finOuvertue- ouverture));
 	
 		//DateTime  readstreamdebut = DateTime.Now;
-		ResourceReader.readStream (stream1);
+		ResourceReader.readResource (stream1);
 		//DateTime  readstreamfin = DateTime.Now;
 		//Debug.Log ("temps readstream :" + (readstreamdebut- readstreamfin));
 
@@ -111,13 +111,13 @@ public class TestMesh : MonoBehaviour {
 
 		DateTime  createmeshdebut = DateTime.Now;
 
-		FileStream stream2 = File.Open(@"C:\Users\Tsubaki\Desktop\textMat.bin", FileMode.Open);
+		FileStream stream2 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereMat.bin", FileMode.Open);
 		MaterialCreator matCret = ResourceReader.readMaterial (stream2);
 		matCret.create (obj);
 
-		//FileStream stream3 = File.Open(@"C:\Users\Tsubaki\Desktop\textImage.bin", FileMode.Open);
-		//TextureCreator TextureCreat = ResourceReader.readTexture (stream3);
-		//matCret2.create (obj);		
+		FileStream stream3 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereImage.bin", FileMode.Open);
+		ImageCreator imageCreat = ResourceReader.readImage (stream3);
+		imageCreat.create (obj);		
 
 		mc.createMesh (obj);
 
@@ -129,6 +129,7 @@ public class TestMesh : MonoBehaviour {
 		//stream2.Close ();
 		//stream3.Close ();
 		//Client.Connect("192.168.1.116", 3000, "coucou hiboux");
+
 	}
 	 
 	// Update is called once per frame
