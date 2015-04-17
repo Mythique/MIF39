@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 
-class ChunkCreator
+public class ChunkCreator
 {
 	public Chunk create ()
 	{

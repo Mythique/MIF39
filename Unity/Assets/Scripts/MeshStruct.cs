@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 
-class MeshStruct
+public class MeshStruct
 {
 	public Mesh mesh;
 	public MeshRenderer renderer;

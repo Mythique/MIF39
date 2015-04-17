@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 
-class Entity
+public class Entity
 {
 }
-
-
-

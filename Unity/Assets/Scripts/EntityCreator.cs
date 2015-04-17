@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 
-class EntityCreator
+public class EntityCreator
 {
 	public Entity create ()
 	{

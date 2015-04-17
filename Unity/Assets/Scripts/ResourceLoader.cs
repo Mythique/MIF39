@@ -35,7 +35,7 @@ public class ResourceLoader
 		return loader;
 	}
 
-	public void load(){
+	public bool load(){
 		byte[] resource=ServerAnswerManager.getInstance().getAnswer();
 		if (resource != null) {
 			MemoryStream stream=new MemoryStream (resource);
@@ -60,7 +60,9 @@ public class ResourceLoader
 			else if(res.ID.Equals(IMAGE_GUID)) {
 				loadImage(data, res.ID);
 			}
+			return true;
 		}
+		return false;
 	}
 
 	void loadMesh (byte[] data, Guid id)

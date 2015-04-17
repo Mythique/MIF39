@@ -183,6 +183,8 @@ public class ResourceReader
 
 		Int32 dataSize = readInt32(stream);
 		Debug.Log ("data size : " + dataSize);
+
+		return new Resource (ID,nom,dataSize);
 	}
 
 	public  MaterialGroup readMaterialGroup(Stream stream)

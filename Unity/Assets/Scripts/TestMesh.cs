@@ -10,7 +10,7 @@ public class TestMesh : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		GameObject obj = new GameObject("obj");
+		/*GameObject obj = new GameObject("obj");
 
 		//DateTime ouverture = DateTime.Now;
 		FileStream stream1 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereMesh.bin", FileMode.Open);
@@ -47,7 +47,7 @@ public class TestMesh : MonoBehaviour {
 		stream1.Close();
 		//stream2.Close ();
 		//stream3.Close ();
-		//Client.Connect("192.168.1.116", 3000, "coucou hiboux");
+		//Client.Connect("192.168.1.116", 3000, "coucou hiboux");*/
 
 	}
 	 
