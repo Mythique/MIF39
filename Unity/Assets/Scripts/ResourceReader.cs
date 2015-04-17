@@ -7,9 +7,18 @@ using System.Collections.Generic;
 
 public class ResourceReader
 {
-	static int cpt = 0;
+	private static ResourceReader reader;
 
-	public static Guid readGuid(Stream stream){
+	private ResourceReader(){}
+
+	public static ResourceReader getInstance(){
+		if (reader == null)
+			reader = new ResourceReader ();
+		return reader;
+	}
+
+
+	public  Guid readGuid(Stream stream){
 		byte[] guid = new byte[38];
 		int nbRead = stream.Read (guid, 0, 38);
 		if (nbRead == 0) 
@@ -24,7 +33,7 @@ public class ResourceReader
 		return new Guid(gu);
 	}
 
-	public static Guid readGuid16(Stream stream){
+	public  Guid readGuid16(Stream stream){
 		byte[] guid = new byte[16];
 		int nbRead = stream.Read (guid, 0, 16);
 		if (nbRead == 0) 
@@ -37,7 +46,7 @@ public class ResourceReader
 		return new Guid(guid);
 	}
 
-	public static Int64 readInt64(Stream stream){
+	public  Int64 readInt64(Stream stream){
 		byte[] tailleNom = new byte[8];
 		int nbRead = stream.Read (tailleNom, 0, 8);
 		if (nbRead == 0) 
@@ -49,7 +58,7 @@ public class ResourceReader
 		return BitConverter.ToInt64 (tailleNom, 0);
 	}
 
-	public static Int32 readInt32(Stream stream){
+	public  Int32 readInt32(Stream stream){
 		byte[] tailleNom = new byte[4];
 		int nbRead = stream.Read (tailleNom, 0, 4);
 		if (nbRead == 0) 
@@ -61,7 +70,7 @@ public class ResourceReader
 		return BitConverter.ToInt32 (tailleNom, 0);
 	}
 
-	public static UInt32 readUInt32(Stream stream){
+	public  UInt32 readUInt32(Stream stream){
 		byte[] tailleNom = new byte[4];
 		int nbRead = stream.Read (tailleNom, 0, 4);
 		if (nbRead == 0) 
@@ -73,7 +82,7 @@ public class ResourceReader
 		return BitConverter.ToUInt32 (tailleNom, 0);
 	}
 
-	public static float readFloat(Stream stream)
+	public  float readFloat(Stream stream)
 	{
 		byte[] taillefloat = new byte[4];
 		int nbRead = stream.Read (taillefloat, 0, 4);
@@ -86,7 +95,7 @@ public class ResourceReader
 		return BitConverter.ToSingle (taillefloat, 0);
 	}
 
-	public static String readString(Stream stream, int size){
+	public  String readString(Stream stream, int size){
 		byte[] nomByte = new byte[size];
 		int nbRead = stream.Read (nomByte, 0, size);
 		if (nbRead == 0) 
@@ -99,7 +108,7 @@ public class ResourceReader
 		return System.Text.Encoding.ASCII.GetString (nomByte);
 	}
 
-	public static byte[] readByte(Stream stream, int size){
+	public  byte[] readByte(Stream stream, int size){
 		byte[] nomByte = new byte[size];
 		int nbRead = stream.Read (nomByte, 0, size);
 		if (nbRead == 0) 
@@ -112,7 +121,7 @@ public class ResourceReader
 		return nomByte;
 	}
 
-	public static bool readBoolean(Stream stream)
+	public  bool readBoolean(Stream stream)
 	{
 		byte[] tailleBool = new byte[1];
 		int nbRead = stream.Read (tailleBool, 0, 1);
@@ -125,7 +134,7 @@ public class ResourceReader
 		return BitConverter.ToBoolean (tailleBool, 0);
 	}
 
-	public static int[] readInt32Arrray(Stream stream, int size)
+	public  int[] readInt32Arrray(Stream stream, int size)
 	{
 		int[] tab = new int[size];
 		for (int i = 0; i < size; i++) 
@@ -135,7 +144,7 @@ public class ResourceReader
 		return tab;
 	}
 
-	public static Triangle readTriangle (Stream stream)
+	public  Triangle readTriangle (Stream stream)
 	{
 
 		bool m_hasNormals = readBoolean(stream);
@@ -161,7 +170,7 @@ public class ResourceReader
 	}
 
 
-	public static Resource readResource (Stream stream)
+	public  Resource readResource (Stream stream)
 	{
 		Guid ID = readGuid (stream);
 		Debug.Log ("guid : " + ID);
@@ -179,7 +188,7 @@ public class ResourceReader
 		return new Resource (ID, nom, dataSize);
 	}
 
-	public static MaterialGroup readMaterialGroup(Stream stream)
+	public  MaterialGroup readMaterialGroup(Stream stream)
 	{
 		Int64 size = readInt64 (stream);
 		//Debug.Log ("size nom material group: " + size);
@@ -202,7 +211,7 @@ public class ResourceReader
 		return new MaterialGroup (matId, meshId, nbFace, triangleListe, nom);
 	}
 
-	public static TextureCreator readTexture(Stream stream)
+	public  TextureCreator readTexture(Stream stream)
 	{
 
 		//Debug.Log ("read texture");
@@ -237,7 +246,7 @@ public class ResourceReader
 		return new TextureCreator(imageID, blendU, blendV, CC, Clamp, Base, Gain, BumpMult, Boost, TexRes, Position, Scale, Turbulence, Channel);
 	}
 
-	public static ColorRGB readRGB(Stream stream)
+	public  ColorRGB readRGB(Stream stream)
 	{
 		float R = readFloat (stream);
 		float G = readFloat (stream);
@@ -246,7 +255,7 @@ public class ResourceReader
 		return new ColorRGB (R, G, B);
 	}
 
-	public static Dissolve readDissolve(Stream stream)
+	public  Dissolve readDissolve(Stream stream)
 	{
 		bool halo = readBoolean(stream);
 		float factor = readFloat(stream);
@@ -254,7 +263,7 @@ public class ResourceReader
 		return new Dissolve (halo, factor);
 	}
 	
-	public static MaterialCreator readMaterial(Stream stream)
+	public  MaterialCreator readMaterial(Stream stream)
 	{
 		readResource (stream);
 		//Debug.Log ("matérial créator");
@@ -310,7 +319,7 @@ public class ResourceReader
 	}
 
 
-	public static MeshCreator readMesh(Stream stream)
+	public  MeshCreator readMesh(Stream stream)
 	{
 		List<Vector3> vertices = new List<Vector3> ();
 		List<Triangle> triangleListe = new List<Triangle>();
@@ -388,7 +397,7 @@ public class ResourceReader
 
 
 
-	public static ImageCreator readImage(Stream stream)
+	public  ImageCreator readImage(Stream stream)
 	{
 		Debug.Log ("Lecture image--------------------------------");
 		readResource (stream);
@@ -416,12 +425,12 @@ public class ResourceReader
 		return new ImageCreator(width, height, depth, nbChannels, sizeData, data);
 	}
 
-	public static EntityCreator readEntity (MemoryStream memoryStream)
+	public  EntityCreator readEntity (MemoryStream memoryStream)
 	{
 		throw new NotImplementedException ();
 	}
 
-	public static ChunkCreator readChunk (MemoryStream memoryStream)
+	public  ChunkCreator readChunk (MemoryStream memoryStream)
 	{
 		throw new NotImplementedException ();
 	}

@@ -35,9 +35,9 @@ public class ServerAnswerManager{
 	public bool addContents(Stream ste){
 
 		int type, length;
-		type = ResourceReader.readInt32 (ste);
+		type = ResourceReader.getInstance().readInt32 (ste);
 		Debug.Log ("Type: "+type);
-		length = ResourceReader.readInt32 (ste);
+		length = ResourceReader.getInstance().readInt32 (ste);
 		Debug.Log ("Taille: "+length);
 		List<Guid> li = new List<Guid>(length);
 

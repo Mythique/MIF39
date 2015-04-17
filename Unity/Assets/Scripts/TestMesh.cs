@@ -100,23 +100,23 @@ public class TestMesh : MonoBehaviour {
 		//Debug.Log ("temps ouverture fichier :" + (finOuvertue- ouverture));
 	
 		//DateTime  readstreamdebut = DateTime.Now;
-		ResourceReader.readResource (stream1);
+		ResourceReader.getInstance().readResource (stream1);
 		//DateTime  readstreamfin = DateTime.Now;
 		//Debug.Log ("temps readstream :" + (readstreamdebut- readstreamfin));
 
 		//DateTime  readmeshdebut = DateTime.Now;
-		MeshCreator mc=ResourceReader.readMesh (stream1);
+		MeshCreator mc=ResourceReader.getInstance().readMesh (stream1);
 		//DateTime  readmeshfin = DateTime.Now;
 		//Debug.Log ("temps readmesh :" + (readmeshdebut- readmeshfin));
 
 		DateTime  createmeshdebut = DateTime.Now;
 
 		FileStream stream2 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereMat.bin", FileMode.Open);
-		MaterialCreator matCret = ResourceReader.readMaterial (stream2);
+		MaterialCreator matCret = ResourceReader.getInstance().readMaterial (stream2);
 		matCret.create (obj);
 
 		FileStream stream3 = File.Open(@"C:\Users\Tsubaki\Desktop\newSphereImage.bin", FileMode.Open);
-		ImageCreator imageCreat = ResourceReader.readImage (stream3);
+		ImageCreator imageCreat = ResourceReader.getInstance().readImage (stream3);
 		imageCreat.create (obj);		
 
 		mc.createMesh (obj);

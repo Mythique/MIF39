@@ -32,7 +32,7 @@ public class ResourceCopier
 		
 	}
 
-	public void copy(Image from, Image to) {
+	public void copy(Texture2D from, Texture2D to) {
 		
 	}
 }

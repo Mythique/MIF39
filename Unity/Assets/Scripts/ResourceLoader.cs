@@ -12,17 +12,12 @@ public class ResourceLoader
 	public static readonly Guid IMAGE_GUID=new Guid();
 
 	private static ResourceLoader loader;
-	private Queue<byte[]> chunk;
-	private Queue<byte[]> entite;
-	private Queue<byte[]> mesh;
-	private Queue<byte[]> mat;
-	private Queue<byte[]> image;
 
 	private Dictionary<Guid,MeshStruct> meshes;
 	private Dictionary<Guid,Chunk> chunks;
 	private Dictionary<Guid,Entity> entities;
 	private Dictionary<Guid,Material> materials;
-	private Dictionary<Guid,Image> images;
+	private Dictionary<Guid,Texture2D> images;
 
 
 	private ResourceLoader ()
@@ -31,13 +26,7 @@ public class ResourceLoader
 		chunks = new Dictionary<Guid, Chunk> ();
 		entities = new Dictionary<Guid, Entity> ();
 		materials = new Dictionary<Guid, Material> ();
-		images = new Dictionary<Guid, Image> ();
-
-		chunk = new Queue<byte[]> ();
-		entite = new Queue<byte[]> ();
-		mesh = new Queue<byte[]> ();
-		mat = new Queue<byte[]> ();
-		image = new Queue<byte[]> ();
+		images = new Dictionary<Guid, Texture2D> ();
 	}
 
 	public static ResourceLoader getInstance(){
@@ -50,18 +39,16 @@ public class ResourceLoader
 		byte[] resource=ServerAnswerManager.getInstance().getAnswer();
 		if (resource != null) {
 			MemoryStream stream=new MemoryStream (resource);
-			Resource res = ResourceReader.readResource(stream);
+			Resource res = ResourceReader.getInstance().readResource(stream);
 			byte[] data = new byte[res.dataSize];
 			stream.Read(data,0,res.dataSize);
 			Debug.Log (res.nom);
 			if(res.ID.Equals(MESH_GUID)){
 				Debug.Log ("mesh");
-				mesh.Enqueue(data);
 				loadMesh(data, res.ID);
 			}
 			else if(res.ID.Equals(MAT_GUID)){
 				Debug.Log ("mat");
-				mat.Enqueue(data);
 				loadMaterial(data, res.ID);
 			}
 			else if(res.ID.Equals(ENTITY_GUID)) {
@@ -78,7 +65,7 @@ public class ResourceLoader
 
 	void loadMesh (byte[] data, Guid id)
 	{
-		MeshCreator mc = ResourceReader.readMesh (new MemoryStream (data));
+		MeshCreator mc = ResourceReader.getInstance().readMesh (new MemoryStream (data));
 		MeshStruct tmp = mc.create();
 		MeshStruct ms = getMeshStruct(id);
 		ResourceCopier.getInstance().copy (tmp, ms);
@@ -86,7 +73,7 @@ public class ResourceLoader
 
 	void loadMaterial (byte[] data, Guid id)
 	{
-		MaterialCreator mc = ResourceReader.readMaterial (new MemoryStream (data));
+		MaterialCreator mc = ResourceReader.getInstance().readMaterial (new MemoryStream (data));
 		Material tmp = mc.create ();
 		Material m = getMaterial (id);
 		ResourceCopier.getInstance().copy (tmp, m);
@@ -94,7 +81,7 @@ public class ResourceLoader
 
 	void loadEntity (byte[] data, Guid id)
 	{
-		EntityCreator ec = ResourceReader.readEntity (new MemoryStream (data));
+		EntityCreator ec = ResourceReader.getInstance().readEntity (new MemoryStream (data));
 		Entity tmp = ec.create ();
 		Entity e = getEntity (id);
 		ResourceCopier.getInstance().copy (tmp, e);
@@ -102,7 +89,7 @@ public class ResourceLoader
 
 	void loadChunk (byte[] data, Guid id)
 	{
-		ChunkCreator cc = ResourceReader.readChunk (new MemoryStream (data));
+		ChunkCreator cc = ResourceReader.getInstance().readChunk (new MemoryStream (data));
 		Chunk tmp = cc.create ();
 		Chunk c = getChunk (id);
 		ResourceCopier.getInstance().copy (tmp, c);
@@ -110,9 +97,9 @@ public class ResourceLoader
 
 	void loadImage (byte[] data, Guid id)
 	{
-		ImageCreator ic = ResourceReader.readImage (new MemoryStream (data));
-		Image tmp = ic.create ();
-		Image i = getImage (id);
+		ImageCreator ic = ResourceReader.getInstance().readImage (new MemoryStream (data));
+		Texture2D tmp = ic.create ();
+		Texture2D i = getImage (id);
 		ResourceCopier.getInstance().copy (tmp, i);
 	}
 
@@ -152,9 +139,9 @@ public class ResourceLoader
 		return materials[id];
 	}
 
-	public Image getImage( Guid id) {
+	public Texture2D getImage( Guid id) {
 		if (!images.ContainsKey (id)) {
-			images[id] = new Image();
+			images[id] = new Texture2D(1,1);
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
 		return images[id];
