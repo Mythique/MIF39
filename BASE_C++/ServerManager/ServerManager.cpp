@@ -142,14 +142,12 @@ bool ServerManager::interpret(QUuid client){
             case ServerManager::SHARED_R :
                 std::cout << "Received Request for resource" << std::endl;
                 l = requete.getLength();
-                std::cout << "Length got " << l << std::endl;
-                ::fromBuffer(requete, l, req);
-                std::cout << "Getting resource " << std::endl;
+                req = QUuid((const char*)(requete.getData()));
                 res = ServerManager::getInstance()->getRessource(req);
-                std::cout << "Resource got " << std::endl;
                 reponse.setType(SHARED_R);
-                reponse.append(res->convertToBuffer());
-                std::cout << "Resource converted" << std::endl;
+                resource = res->_toBuffer();//convertToBuffer();
+                std::cout << ResourceHolder::AllKeys().size() << std::endl;
+                reponse.append(resource);
                 connection->send(client, reponse);
                 break;
 
