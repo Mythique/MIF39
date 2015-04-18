@@ -6,7 +6,7 @@ using System.IO;
 
 public class ChunkCreator
 {
-	public Chunk create ()
+	public Chunk create (ref Chunk chunk)
 	{
 		throw new NotImplementedException ();
 	}

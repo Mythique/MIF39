@@ -66,7 +66,7 @@ public class MeshCreator
 		return -1;
 	}
 
-	public MeshStruct create()
+	public MeshStruct create(ref MeshStruct meshStruct)
 	{
 		bool has_norm = normales.Count > 0;
 		//Debug.Log ("normales du mesh " + has_norm);
@@ -75,7 +75,7 @@ public class MeshCreator
 		List<Vector3> norms = new List<Vector3>();
 		List<Vector3> vers = new List<Vector3>();
 		List<Vector2> text = new List<Vector2>();
-		Mesh mesh =  new Mesh();
+		Mesh mesh = meshStruct.mesh;
 	
 		DateTime  debutforeach = DateTime.Now;
 
@@ -121,11 +121,11 @@ public class MeshCreator
 		//mesh.Optimize();
 
 		mesh.name = id.ToString();
-		MeshRenderer meshRenderer = new MeshRenderer ();
+		MeshRenderer meshRenderer = meshStruct.renderer;
 		meshRenderer.materials = listeMats;
 		mesh.RecalculateNormals ();
 
-		return new MeshStruct(mesh, meshRenderer);
+		return meshStruct;
 	}
 
 

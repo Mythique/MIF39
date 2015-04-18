@@ -6,7 +6,7 @@ using System.IO;
 
 public class EntityCreator
 {
-	public Entity create ()
+	public Entity create (ref Entity entity)
 	{
 		throw new NotImplementedException ();
 	}

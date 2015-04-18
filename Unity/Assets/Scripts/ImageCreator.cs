@@ -22,11 +22,11 @@ public class ImageCreator
 		this.data = data; 
 	}
 
-	public Texture2D create()
+	public Texture2D create(ref Texture2D t2d)
 	{
 		int widthTot = 0;
 		int heightTot = height;
-		Texture2D t2d = new Texture2D (width, height);
+		t2d.Resize (width, height);
 
 		if (depth == 32)
 		{

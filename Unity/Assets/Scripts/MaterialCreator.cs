@@ -78,9 +78,9 @@ public class MaterialCreator
 		this.Illumination = Illumination;
 	}
 	
-	public Material create()
+	public Material create(ref Material material)
 	{
-		Material material = new Material (Shader.Find("Standard"));
+		material.shader = Shader.Find ("Standard");
 		material.SetColor("_Color", new Color(Diffuse.getR(), Diffuse.getG(), Diffuse.getB()));
 		material.SetColor("_SpecColor", new Color(Specular.getR(), Specular.getG(), Specular.getB()));
 

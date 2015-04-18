@@ -68,41 +68,41 @@ public class ResourceLoader
 	void loadMesh (byte[] data, Guid id)
 	{
 		MeshCreator mc = ResourceReader.getInstance().readMesh (new MemoryStream (data));
-		MeshStruct tmp = mc.create();
 		MeshStruct ms = getMeshStruct(id);
-		ResourceCopier.getInstance().copy (tmp, ms);
+		MeshStruct tmp = mc.create(ref ms);
+		//ResourceCopier.getInstance().copy (tmp, ms);
 	}
 
 	void loadMaterial (byte[] data, Guid id)
 	{
 		MaterialCreator mc = ResourceReader.getInstance().readMaterial (new MemoryStream (data));
-		Material tmp = mc.create ();
 		Material m = getMaterial (id);
-		ResourceCopier.getInstance().copy (tmp, m);
+		Material tmp = mc.create (ref m);
+		//ResourceCopier.getInstance().copy (tmp, m);
 	}
 
 	void loadEntity (byte[] data, Guid id)
 	{
 		EntityCreator ec = ResourceReader.getInstance().readEntity (new MemoryStream (data));
-		Entity tmp = ec.create ();
 		Entity e = getEntity (id);
-		ResourceCopier.getInstance().copy (tmp, e);
+		Entity tmp = ec.create (ref e);
+		//ResourceCopier.getInstance().copy (tmp, e);
 	}
 
 	void loadChunk (byte[] data, Guid id)
 	{
 		ChunkCreator cc = ResourceReader.getInstance().readChunk (new MemoryStream (data));
-		Chunk tmp = cc.create ();
 		Chunk c = getChunk (id);
-		ResourceCopier.getInstance().copy (tmp, c);
+		Chunk tmp = cc.create (ref c);
+		//ResourceCopier.getInstance().copy (tmp, c);
 	}
 
 	void loadImage (byte[] data, Guid id)
 	{
 		ImageCreator ic = ResourceReader.getInstance().readImage (new MemoryStream (data));
-		Texture2D tmp = ic.create ();
 		Texture2D i = getImage (id);
-		ResourceCopier.getInstance().copy (tmp, i);
+		Texture2D tmp = ic.create (ref i);
+		//ResourceCopier.getInstance().copy (tmp, i);
 	}
 
 	/* Si l'id n'est pas dans la map, alors on crée un nouveau MeshStruct et on le donne
