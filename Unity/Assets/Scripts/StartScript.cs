@@ -7,11 +7,13 @@ public class StartScript : MonoBehaviour {
 	public string ip="192.168.1.108";
 	public int port=3000;
 	public Logger.Type logLvl=Logger.Type.NONE;
+	public string logFile="";
 	// Use this for initialization
 	void Start () {
 		Client.getInstance ().Connect (ip,port);
 		Thread t = new Thread (resourceLoad);
 		Logger.logLvl = logLvl;
+		Logger.logFile = logFile;
 		t.Start ();
 	}
 
