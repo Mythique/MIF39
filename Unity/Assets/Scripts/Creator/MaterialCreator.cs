@@ -5,7 +5,7 @@ using System;
 public class MaterialCreator
 {
 	String nom;
-	Guid ID;
+	public Guid id;
 	ColorRGB Ambient;
 	ColorRGB Diffuse;
 	ColorRGB Specular;
@@ -56,7 +56,7 @@ public class MaterialCreator
 	                       int Illumination)
 	{
 		this.nom = nom;
-		this.ID = ID;
+		this.id = ID;
 		this.Ambient = Ambient;
 		this.Diffuse = Diffuse;
 		this.Specular = Specular;
@@ -84,15 +84,24 @@ public class MaterialCreator
 		material.SetColor("_Color", new Color(Diffuse.getR(), Diffuse.getG(), Diffuse.getB()));
 		material.SetColor("_SpecColor", new Color(Specular.getR(), Specular.getG(), Specular.getB()));
 
-		ResourceLoader.getInstance().getImage(AmbientMap.getImageID());
-		material.SetTexture("_MainText", ResourceLoader.getInstance().getImage(DiffuseMap.getImageID()));
-		ResourceLoader.getInstance().getImage(SpecularMap.getImageID());
-		ResourceLoader.getInstance().getImage(SpecularExponentMap.getImageID());
-		ResourceLoader.getInstance().getImage(DissolveMap.getImageID());
-		ResourceLoader.getInstance().getImage(DecalMap.getImageID());
-		ResourceLoader.getInstance().getImage(DisplacementMap.getImageID());
-		ResourceLoader.getInstance().getImage(BumpMap.getImageID());
-		ResourceLoader.getInstance().getImage(ReflectionMap.getImageID());
+		if(!AmbientMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(AmbientMap.getImageID());
+		if (!DiffuseMap.getImageID ().Equals (new Guid ()))
+			material.SetTexture("_MainTex", ResourceLoader.getInstance().getImage(DiffuseMap.getImageID()));
+		if(!SpecularMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(SpecularMap.getImageID());
+		if(!SpecularExponentMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(SpecularExponentMap.getImageID());
+		if(!DissolveMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(DissolveMap.getImageID());
+		if(!DecalMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(DecalMap.getImageID());
+		if(!DisplacementMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(DisplacementMap.getImageID());
+		if(!BumpMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(BumpMap.getImageID());
+		if(!ReflectionMap.getImageID().Equals(new Guid()))
+			ResourceLoader.getInstance().getImage(ReflectionMap.getImageID());
 
 		return material;
 

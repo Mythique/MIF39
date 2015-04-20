@@ -173,16 +173,12 @@ public class ResourceReader
 	public  Resource readResource (Stream stream)
 	{
 		Guid ID = readGuid (stream);
-		Debug.Log ("guid : " + ID);
 
 		Int64 size = readInt64 (stream);
-		Debug.Log ("size nom : " + size);
 
 		String nom = readString(stream,(int) size);
-		Debug.Log ("nom : " + nom);
 
 		Int32 dataSize = readInt32(stream);
-		Debug.Log ("data size : " + dataSize);
 
 		return new Resource (ID,nom,dataSize);
 	}
@@ -264,7 +260,7 @@ public class ResourceReader
 	
 	public  MaterialCreator readMaterial(Stream stream)
 	{
-		readResource (stream);
+		//readResource (stream);
 		//Debug.Log ("matérial créator");
 		Guid ID = readGuid (stream);
 		//Debug.Log ("guid material : " + ID);
@@ -388,7 +384,7 @@ public class ResourceReader
 	public  ImageCreator readImage(Stream stream)
 	{
 		Debug.Log ("Lecture image--------------------------------");
-		readResource (stream);
+		//readResource (stream);
 
 		Guid ID = readGuid (stream);
 		Debug.Log ("guid image : " + ID);
@@ -410,7 +406,7 @@ public class ResourceReader
 		int sizeData = width * height * depth /8;
 		Debug.Log ("sizeData : " + sizeData);
 		byte[] data = readByte (stream, sizeData);
-		return new ImageCreator(width, height, depth, nbChannels, sizeData, data);
+		return new ImageCreator(width, height, depth, nbChannels, sizeData, data,ID);
 	}
 
 	public  EntityCreator readEntity (MemoryStream memoryStream)

@@ -10,7 +10,7 @@ public class MeshCreator
 	List<Vector3> normales;
 	List<Vector2> textures;
 	List<MaterialGroup> matGroup;
-	Guid id;
+	public Guid id;
 
 	public MeshCreator()
 	{
@@ -66,8 +66,9 @@ public class MeshCreator
 		return -1;
 	}
 
-	public MeshStruct create(ref MeshStruct meshStruct)
+	public GameObject create(ref GameObject obj)
 	{
+		Logger.Debug ("Create Mesh");
 		bool has_norm = normales.Count > 0;
 		//Debug.Log ("normales du mesh " + has_norm);
 		bool has_text = textures.Count > 0;
@@ -75,7 +76,7 @@ public class MeshCreator
 		List<Vector3> norms = new List<Vector3>();
 		List<Vector3> vers = new List<Vector3>();
 		List<Vector2> text = new List<Vector2>();
-		Mesh mesh = meshStruct.mesh;
+		Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
 	
 		DateTime  debutforeach = DateTime.Now;
 
@@ -112,6 +113,7 @@ public class MeshCreator
 			mesh.SetTriangles(groups[j].ToArray(),j);
 
 			// Récupération des mats du cache
+			Logger.Debug("Chargement Mat");
 			listeMats[j] = ResourceLoader.getInstance().getMaterial(matGroup[j].getMatId());
 
 		}
@@ -121,11 +123,11 @@ public class MeshCreator
 		//mesh.Optimize();
 
 		mesh.name = id.ToString();
-		MeshRenderer meshRenderer = meshStruct.renderer;
+		MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer> ();
 		meshRenderer.materials = listeMats;
 		mesh.RecalculateNormals ();
 
-		return meshStruct;
+		return obj;
 	}
 
 

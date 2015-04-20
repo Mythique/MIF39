@@ -7,6 +7,9 @@ using System.Net;
 using System.Text;
 using System.Net.Sockets;
 
+
+
+
 /*
  * Class Client
  * représentant un client de connection au serveur
@@ -15,6 +18,9 @@ using System.Net.Sockets;
  */
 public sealed class Client
 {	
+
+	public string ip="192.168.1.116";
+public int port=3000;
 	/*
 	 * instanciation unique de la classe
 	 */
@@ -48,6 +54,7 @@ public sealed class Client
 	 */
 	public void ask(ServerAnswerManager.Type type,Guid param)
 	{
+		Connect (ip, port);
 		bool read = false;
 		int msgSize;
 		Stream stm = tcpclnt.GetStream();
@@ -59,6 +66,7 @@ public sealed class Client
 		stm.Write(guid, 0, guid.Length);
 		stm.Flush ();
 		ServerAnswerManager.getInstance ().addContents (stm);
+		Disconnect();
 	}
 
 	/*
@@ -71,7 +79,7 @@ public sealed class Client
 		try 
 		{
 			tcpclnt = new TcpClient();
-			Debug.Log("Connecting.....");
+			Logger.Trace("Connecting.....");
 
 			if(ipAdresse != "")
 			{
@@ -83,12 +91,12 @@ public sealed class Client
 				tcpclnt.Connect(IPAddress.Any,port);
 			}
 
-			Debug.Log("Addresse okok");
+			Logger.Trace("Addresse okok");
 		}
 		
 		catch (Exception e)
 		{
-			Debug.Log("Error..... " + e.StackTrace);
+			Logger.Error("Error..... " + e.StackTrace);
 		}
 	}
 
@@ -104,7 +112,7 @@ public sealed class Client
 		}
 		catch(Exception e)
 		{
-			Debug.Log("Error disconnecting : " + e.ToString());
+			Logger.Error("Error disconnecting : " + e.ToString());
 		}
 	}
 

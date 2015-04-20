@@ -11,19 +11,22 @@ public class ImageCreator
 	int nbChannels;
 	int size;
 	byte[] data;
+	public Guid id;
 
-	public ImageCreator(int width, int height, int depth, int nbChannels, int size, byte[] data)
+	public ImageCreator(int width, int height, int depth, int nbChannels, int size, byte[] data,Guid id)
 	{
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
 		this.nbChannels = nbChannels;
 		this.size = size;
-		this.data = data; 
+		this.data = data;
+		this.id = id;
 	}
 
 	public Texture2D create(ref Texture2D t2d)
 	{
+		Logger.Debug("Texture2D create "+t2d.name);
 		int widthTot = 0;
 		int heightTot = height;
 		t2d.Resize (width, height);
@@ -43,8 +46,10 @@ public class ImageCreator
 			}
 		}
 		t2d.Apply ();
+		Logger.Debug("end Texture2D create");
 
+		File.WriteAllBytes(@"C:\Users\Unity\Desktop\test.jpg", t2d.EncodeToJPG (100));
 		return t2d;
-		//File.WriteAllBytes(@"C:\Users\Tsubaki\Desktop\test.jpg", t2d.EncodeToJPG (100));
+
 	}
 }

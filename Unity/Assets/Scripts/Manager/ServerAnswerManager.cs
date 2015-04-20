@@ -34,6 +34,7 @@ public class ServerAnswerManager{
 
 	public bool addContents(Stream ste){
 
+		Logger.Debug ("Add Contents");
 		int type, length;
 		type = ResourceReader.getInstance().readInt32 (ste);
 		Debug.Log ("Type: "+type);
@@ -70,7 +71,7 @@ public class ServerAnswerManager{
 	}
 
 	public byte[] getAnswer(){
-		Debug.Log ("count: "+ressourceQueue.Count);
+		Logger.Trace ("Server Answer Manager/ nombre de ressource non lu: "+ressourceQueue.Count);
 		if(ressourceQueue.Count!=0)
 			return ressourceQueue.Dequeue();
 
