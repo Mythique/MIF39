@@ -17,13 +17,13 @@ int main() {
      * Fin de la connexion
     */
 
-    while(true) {
-        while(client == fake) {
+    while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
-        }
-        ServerManager::getInstance()->interpret(client);
-        client = fake;
     }
+    while(ServerManager::getInstance()->getConnection()->isStarted())
+        ServerManager::getInstance()->interpret(client);
+
+    client = fake;
 
     ServerManager::getInstance()->stopConnection();
     return 0;
