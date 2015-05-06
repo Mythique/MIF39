@@ -91,7 +91,7 @@ ByteBuffer ResourceHolder::ToBuffer ( const SharedResourcePtr& res ) {
 void ResourceHolder::Export ( QString filename ) {
     ByteBuffer dictionary ( sizeof ( unsigned int ) );
     std::ofstream out1;
-    out1.open ( filename.toStdString() );
+    out1.open ( filename.toStdString().c_str() );
     unsigned int i = 0;
     ::toBuffer (dictionary, 0, (uint) mResources.keys().size() );
     foreach ( QUuid uuid, mResources.keys() ) {
@@ -133,7 +133,7 @@ void ResourceHolder::Import ( QString filename ) {
     ByteBuffer length ( sizeof ( unsigned long long ) );
     std::ifstream in1;
     unsigned long long tmpd = 0;
-    in1.open ( filename.toStdString() );
+    in1.open ( filename.toStdString().c_str() );
     in1.read((char*)count.getData(), count.getLength());
     tmpd+= count.getLength();
     uint n; ::fromBuffer<uint> ( count, 0, n );

@@ -1,4 +1,4 @@
-#include "Assets/Light.hpp"
+#include "Assets/light.hpp"
 
 namespace Assets {
 

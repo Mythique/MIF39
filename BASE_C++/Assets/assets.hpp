@@ -8,7 +8,7 @@
 #include "Assets/Image.hpp"
 #include "Assets/Material.hpp"
 #include "Assets/Mesh.hpp"
-#include "Assets/Light.hpp"
+#include "Assets/light.hpp"
 #include "Assets/behaviour.hpp"
 #include "Assets/gameentity.hpp"
 #include "Assets/gameobject.hpp"

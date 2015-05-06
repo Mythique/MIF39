@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
         std::cout << "Client found" <<  client.toString().toStdString() << std::endl;
         ServerManager::getInstance()->interpret(client);
         std::cout << "Client disconnected" << std::endl;
-        client = fake;
+        //client = fake;
     }
 
     ServerManager::getInstance()->stopConnection();
