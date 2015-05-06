@@ -46,6 +46,9 @@ void OnReceive ( QUuid client ) {
     if ( message->getLength() > 0 ) {
         std::cout << "Recv : " << message->getLength() << " bytes from " << theClients [ client ]->uuid.toString().toStdString() << std::endl;
         // gestion du message recu cote serveur
+        unsigned long long index = 0;
+        SharedResourcePtr mesh = ResourceHolder::FromBuffer(*message, index);
+        std::cout << "Got mesh" << std::endl;
     }
     delete message;
 }
@@ -63,7 +66,7 @@ void* client_thread_receive ( void* data )
             message = new ByteBuffer;
             OnReceive ( client->uuid );
         }
-        pthread_yield();
+        pthread_yield_np();
     }
     return NULL;
 }
@@ -79,7 +82,7 @@ void* client_thread_send ( void* data )
             client->server->send ( client->uuid, *message );
             delete message;
         }
-        pthread_yield();
+        pthread_yield_np();
     }
     return NULL;
 }
@@ -94,7 +97,7 @@ void* listen_thread ( void* data )
             client = server->listen();
         }
         OnConnect ( client );
-        pthread_yield();
+        pthread_yield_np();
     }
     return NULL;
 }
@@ -110,7 +113,7 @@ int main ( int argc, char** argv ) {
     pthread_t listen;
     pthread_create ( & listen, NULL, listen_thread, theServer );
     while ( true ) {
-        pthread_yield();
+        pthread_yield_np();
     }
     theServer->stop ();
     return 0;
