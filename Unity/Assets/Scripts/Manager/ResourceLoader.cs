@@ -124,6 +124,13 @@ public class ResourceLoader
 		//ResourceCopier.getInstance().copy (tmp, i);
 	}
 
+	void loadLight (byte[] data)
+	{
+		LightCreator lc = ResourceReader.getInstance ().readLight (new MemoryStream (data));
+		GameObject light = getMeshStruct(lc.id);
+		lc.create (light);
+	}
+
 	/* Si l'id n'est pas dans la map, alors on crée un nouveau MeshStruct et on le donne
 		 * Juste avant de retourner, on fait la requete au serveur via le client
 		 * Si l'id est dans la map, on le donne et finish
