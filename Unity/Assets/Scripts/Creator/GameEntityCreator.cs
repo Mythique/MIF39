@@ -24,6 +24,7 @@ public class GameEntityCreator
 	{
 		ge.semantics = semantics;
 		ge.go.name = realName;
+		ge.elements = elements;
 		ResourceLoader loader = ResourceLoader.getInstance ();
 		foreach (Guid id in elements) {
 

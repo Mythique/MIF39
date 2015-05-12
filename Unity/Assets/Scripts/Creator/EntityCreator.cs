@@ -29,6 +29,7 @@ public class EntityCreator
 	public Entity create (ref Entity entity)
 	{
 		GameObject go = entity.go;
+		entity.gameEntity = meshId;
 		go.name = realName;
 		go.transform.position = position;
 		go.transform.rotation = rotation;

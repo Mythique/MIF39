@@ -28,6 +28,7 @@ public class ChunkCreator
 	public Chunk create (ref Chunk chunk)
 	{
 		GameObject go = chunk.go;
+		chunk.objects = objects;
 		go.name = realName;
 		go.transform.localScale = extents;
 		go.transform.position = position;
@@ -36,8 +37,8 @@ public class ChunkCreator
 		foreach (Guid id in objects) {
 
 			Entity entity=ResourceLoader.getInstance().getEntity(id);
-			GameObject go=GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
-			go.transform.parent=go.transform;
+			GameObject go2=GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
+			go2.transform.parent=go.transform;
 		}
 
 		return chunk;
