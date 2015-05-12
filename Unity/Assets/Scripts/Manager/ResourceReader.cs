@@ -448,6 +448,35 @@ public class ResourceReader
 		return new EntityCreator (ID, realName, cell, position, rotation, scale, semantics, meshId);
 	}
 
+	public GameEntityCreator readGameEntity (MemoryStream stream)
+	{
+		Guid ID = readGuid (stream);
+		Int64 size = readInt64 (stream);
+		String nom = readString(stream,(int) size);
+
+
+		size = readInt64 (stream);
+		String realName = readString(stream,(int) size);
+
+		List<string> semantics =new List<string>();
+		Int32 nbString = readInt32 (stream);
+		for (int i = 0; i < nbString; i++) 
+		{
+			size = readInt64(stream);
+			semantics.Add(readString(stream,(int) size));
+		}
+
+
+		List<Guid> elements =new List<Guid>();
+		Int32 nbGuid = readInt32 (stream);
+		for (int i = 0; i < nbGuid; i++) 
+		{
+			elements.Add(readGuid(stream));
+		}
+
+		return new GameEntityCreator (ID, realName, semantics, elements);
+	}
+
 	public  ChunkCreator readChunk (Stream stream)
 	{
 		Guid ID = readGuid (stream);

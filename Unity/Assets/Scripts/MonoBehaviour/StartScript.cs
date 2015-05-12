@@ -39,7 +39,14 @@ public class StartScript : MonoBehaviour {
 		loader.load ();
 		loader.load ();
 		loader.load ();
-		Client.getInstance ().Disconnect();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		//Client.getInstance ().Disconnect();
 	}
 
 

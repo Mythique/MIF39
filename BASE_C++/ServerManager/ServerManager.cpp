@@ -118,14 +118,19 @@ bool ServerManager::interpret(QUuid client){
     EncByteBuffer requete, reponse;
     requete.setType(-2);
     SharedResourcePtr res;
-    QUuid req;
+    QUuid req, q;
     EncByteBuffer resource;
     long long unsigned int l;
 
     while(requete.getType() == -2) {
+
         if(connection->isStarted()){
             std::cout << "EncTcpStartPoint try receiving" << std::endl;
-            connection->receive(client, requete);
+            
+			if(! connection->receive(client, requete) ) {
+				std::cout << "Not able to receive" <<std::endl;
+				return false;
+			}
             std::cout << "After receiving " << requete.getType() << "/" << requete.getLength() << std::endl;
         }
         else
@@ -137,7 +142,8 @@ bool ServerManager::interpret(QUuid client){
     }
         std::cout << "Receiving request" << std::endl;
         std::cout << "Type " << requete.getType() << " , length " << requete.getLength() << std::endl;
-        switch(requete.getType()){
+        
+		switch(requete.getType()){
 
             case ServerManager::SHARED_R :
                 std::cout << "Received Request for resource" << std::endl;
@@ -147,9 +153,7 @@ bool ServerManager::interpret(QUuid client){
                 reponse.setType(SHARED_R);
                 resource = ResourceHolder::ToBuffer(res);
                 reponse.append(resource);
-                connection->send(client, reponse);
                 break;
-
 
             case ServerManager::TEST :
                 std::cout << "Received TEST" << std::endl;
@@ -157,12 +161,25 @@ bool ServerManager::interpret(QUuid client){
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);
                 res = ServerManager::getInstance()->getRessource(req);
-                QUuid q;
+
                 reponse.append(ByteBuffer((unsigned char*)(q.toByteArray().data()), q.toByteArray().size()));
-                connection->send(client, reponse);
-            	std::cout << "Test reçu" <<std::endl;
                 break;
+
+			case ServerManager::WORLD :
+				std::cout << "Error : Unexpected type WORLD." << std::endl;
+				return false;
+				break;
+
+			default :
+				std::cout << "Error : Unknown type " << requete.getType() << std::endl;
+				return false;
+				break;
         }
+
+		if(! connection->send(client, reponse )){
+				std::cout << "Couldn't send" << std::endl;
+				return false;
+		}
 
     return true;
 }

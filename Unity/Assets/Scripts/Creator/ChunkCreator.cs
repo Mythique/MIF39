@@ -34,7 +34,10 @@ public class ChunkCreator
 		chunk.indice = indice;
 
 		foreach (Guid id in objects) {
-			ResourceLoader.getInstance().getEntity(id).go.transform.parent=go.transform;
+
+			Entity entity=ResourceLoader.getInstance().getEntity(id);
+			GameObject go=GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
+			go.transform.parent=go.transform;
 		}
 
 		return chunk;

@@ -34,7 +34,10 @@ public class EntityCreator
 		go.transform.rotation = rotation;
 		go.transform.localScale = scale;
 		entity.semantics = semantics;
-		ResourceLoader.getInstance ().getMeshStruct (meshId).transform.parent = go.transform;
+		//TODO
+		GameObject go2=ResourceLoader.getInstance ().getGameEntity(meshId).go;
+		GameObject go3=GameObject.Instantiate(go2,Vector3.zero,Quaternion.identity);
+		go3.transform.parent = go.transform;
 
 		return entity;
 	}

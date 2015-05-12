@@ -8,6 +8,7 @@ public class Entity
 {
 	public GameObject go{ get; set; }
 	public List<string> semantics{ get; set; }
+	public Guid gameEntity {get; set; }
 	
 	public Entity(){
 		go = new GameObject ();
@@ -25,5 +26,4 @@ public class Entity
 		this.go = go;
 		this.semantics = semantics;
 	}
-
 }

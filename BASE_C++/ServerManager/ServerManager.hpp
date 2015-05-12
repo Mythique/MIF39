@@ -10,7 +10,7 @@
 class ServerManager
 {
 public :
-    enum dataType {COMPRESSED=1, SHARED_R=2, TEST = -1};
+    enum dataType {COMPRESSED=1, SHARED_R=2, WORLD = 4, TEST = -1};
     void writeToFile(EncByteBuffer& b);
     static ServerManager* getInstance();
     SharedResourcePtr getRessource(QUuid);

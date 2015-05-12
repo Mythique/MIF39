@@ -8,15 +8,17 @@ public class ResourceLoader
 {
 	public static readonly Guid MAT_GUID=new Guid("3c50697c-543a-0e7f-6ab6-23ae942b73cc");
 	public static readonly Guid MESH_GUID=new Guid("4394cb82-98f0-f0ef-1e3a-e4956402ace7");
-	public static readonly Guid ENTITY_GUID=new Guid();
-	public static readonly Guid CHUNK_GUID=new Guid();
-	public static readonly Guid WORLD_GUID=new Guid();
+	public static readonly Guid ENTITY_GUID=new Guid("e1bf9bb2-3648-1d98-96da-a6f5fc95a5fb");
+	public static readonly Guid CHUNK_GUID=new Guid("9855558d-bbf9-13a9-4946-8969a5bd7cc5");
+	public static readonly Guid GAME_ENTITY_GUID=new Guid("c2475906-4124-98ad-4077-daca4645492a");
+	public static readonly Guid WORLD_GUID=new Guid("8139645d-dc0d-a852-d77d-89ffe3ae9079");
 	public static readonly Guid IMAGE_GUID=new Guid("0685f590-f83a-0e1f-d272-2a46b8321d24");
 
 	private static ResourceLoader loader;
 
 	private Dictionary<Guid,World> world;
 	private Dictionary<Guid,GameObject> meshes;
+	private Dictionary<Guid,GameEntity> gameEntities;
 	private Dictionary<Guid,Chunk> chunks;
 	private Dictionary<Guid,Entity> entities;
 	private Dictionary<Guid,Material> materials;
@@ -68,6 +70,9 @@ public class ResourceLoader
 			}
 			else if(res.ID.Equals(IMAGE_GUID)) {
 				loadImage(data);
+			}
+			else if(res.ID.Equals(GAME_ENTITY_GUID)) {
+				loadGameEntity(data);
 			}
 			return true;
 		}
@@ -127,8 +132,15 @@ public class ResourceLoader
 	void loadLight (byte[] data)
 	{
 		LightCreator lc = ResourceReader.getInstance ().readLight (new MemoryStream (data));
-		GameObject light = getMeshStruct(lc.id);
+		GameObject light = getMeshStruct (lc.id);
 		lc.create (light);
+
+	}
+	void loadGameEntity (byte[] data)
+	{
+		GameEntityCreator gec=ResourceReader.getInstance().readGameEntity(new MemoryStream (data));
+		GameEntity ge = getGameEntity (gec.ID);
+		GameEntity tmp = gec.create (ref ge);
 	}
 
 	/* Si l'id n'est pas dans la map, alors on crée un nouveau MeshStruct et on le donne
@@ -185,11 +197,21 @@ public class ResourceLoader
 	public Texture2D getImage( Guid id) {
 		if (!images.ContainsKey (id)) {
 			Texture2D tex =new Texture2D(1,1);
-			tex.name="vouvou";
 			images[id] = tex;
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
 		return images[id];
+	}
+
+
+	public GameEntity getGameEntity (Guid id)
+	{
+		if (!gameEntities.ContainsKey (id)) {
+			GameEntity ge =new GameEntity();
+			gameEntities[id] = ge;
+			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
+		}
+		return gameEntities[id];
 	}
 
 	public void addObj(GameObject obj ,Guid id){
