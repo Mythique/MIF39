@@ -126,6 +126,7 @@ unsigned long long GameEntity::_fromBuffer ( const ByteBuffer& buffer, unsigned 
             add<GameEntityElement*> ( "Elements", mat );
         }
     }
+    std::cout << getUUID().toString().toStdString() << std::endl;
     return lindex;
 }
 

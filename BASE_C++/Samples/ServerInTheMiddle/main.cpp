@@ -28,16 +28,23 @@ int main(int argc, char** argv) {
      *      Fin du client
      * Fin de la connexion
     */
-    /*FileDescriptor file ( argv[1]);
-    SharedResourceList ress = ResourceHolder::Load(file);
-    std::cout << "** Resource loaded" << std::endl;
-    SharedResourcePtr ptr = ress [0];
+    FileDescriptor file ( argv[1]);
+    ResourceHolder::Import(argv[1]);
+    std::cout << "** Resource loaded : " << ResourceHolder::AllKeys ().size () << std::endl;
+    /*SharedResourcePtr ptr = ress [0];
+    std::cout << "Got ptr" << std::endl;
     QUuid quid = ptr.data()->getUUID();
+    std::cout << "quid got" << std::endl;*/
+    /*std::cout << "Before getting quid" << std::endl;
+    SharedResourceList list = ResourceHolder::GetAllByTypeName("GameEntity");
+    std::cout << "list got " << list.size() << std::endl;
+    QUuid entity = list[0] ->getUUID();
+    std::cout << "entity got" << std::endl;*/
 
-    std::cout << "QUuid : " << quid.toString().toStdString() << std::endl;
-	*/
+    //std::cout << "QUuid : " << entity.toString().toStdString() << std::endl;
+	
 
-    /*while(true) {
+    while(true) {
         while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
         }
@@ -47,7 +54,7 @@ int main(int argc, char** argv) {
         //client = fake;
     }//*/
 	
-	while ( true ) {
+	/*while ( true ) {
         // attente d'un client
         std::cout << "Wait for client" << std::endl;
         QUuid client;
@@ -86,10 +93,10 @@ int main(int argc, char** argv) {
                 sended += reply.getLength();
                 std::cout << " replied" << std::endl;
             }*/
-            std::cout << "Sent " << sended << " bytes" << std::endl;
+            /*std::cout << "Sent " << sended << " bytes" << std::endl;
         }
         // deconnexion du client
-    }
+    }*/
 
 
     ServerManager::getInstance()->stopConnection();
