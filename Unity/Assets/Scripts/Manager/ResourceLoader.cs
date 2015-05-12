@@ -133,7 +133,7 @@ public class ResourceLoader
 	{
 		LightCreator lc = ResourceReader.getInstance ().readLight (new MemoryStream (data));
 		GameObject light = getMeshStruct (lc.id);
-		lc.create (light);
+		lc.create (ref light);
 
 	}
 	void loadGameEntity (byte[] data)

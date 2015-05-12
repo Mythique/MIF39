@@ -37,7 +37,7 @@ public class ChunkCreator
 		foreach (Guid id in objects) {
 
 			Entity entity=ResourceLoader.getInstance().getEntity(id);
-			GameObject go2=GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
+			GameObject go2=(GameObject) GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
 			go2.transform.parent=go.transform;
 		}
 

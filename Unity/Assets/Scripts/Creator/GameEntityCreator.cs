@@ -29,9 +29,11 @@ public class GameEntityCreator
 		foreach (Guid id in elements) {
 
 			GameObject go=loader.getMeshStruct(id);
-			GameObject goi=GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
+			GameObject goi=(GameObject) GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
 			goi.transform.parent=ge.go.transform;
 		}
+
+		return ge;
 	}
 }
 

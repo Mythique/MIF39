@@ -27,9 +27,8 @@ public class LightCreator
 	{
 		Light lightComp = light.AddComponent<Light>();
 		lightComp.intensity = intensity;
-		lightComp.color = color;
-		lightComp.type = type;
-
+		lightComp.color =new Color(color.x,color.y,color.z);
+		lightComp.type = type==Type.Point?LightType.Point:type==Type.Direction?LightType.Directional:type==Type.Surface?LightType.Area:LightType.Point;
 		return light;
 	}
 }

@@ -37,7 +37,7 @@ public class EntityCreator
 		entity.semantics = semantics;
 		//TODO
 		GameObject go2=ResourceLoader.getInstance ().getGameEntity(meshId).go;
-		GameObject go3=GameObject.Instantiate(go2,Vector3.zero,Quaternion.identity);
+		GameObject go3=(GameObject) GameObject.Instantiate(go2,Vector3.zero,Quaternion.identity);
 		go3.transform.parent = go.transform;
 
 		return entity;
