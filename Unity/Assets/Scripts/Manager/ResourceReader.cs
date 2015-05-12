@@ -471,16 +471,4 @@ public class ResourceReader
 
 		return new ChunkCreator (ID,realName,world,indice,extents,position,objects);
 	}
-
-	public LightCreator readLight(Stream stream)
-	{
-		Guid ID = readGuid (stream);
-		Int64 size = readInt64 (stream);
-		string realName = readString(stream, (int) size);
-		LightCreator.Type type = (LightCreator.Type)readInt32 (stream);
-		float intensity = readFloat(stream);
-		Vector3 color = readVector3(stream);
-
-		return new LightCreator (ID, realName, intensity, color, type);
-	}
 }
