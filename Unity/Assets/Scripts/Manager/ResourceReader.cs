@@ -82,6 +82,11 @@ public class ResourceReader
 		return BitConverter.ToUInt32 (tailleNom, 0);
 	}
 
+	Vector2 readVector2ui (Stream stream)
+	{
+		return new Vector2 (readUInt32(stream),readUInt32(stream));
+	}
+
 	public  float readFloat(Stream stream)
 	{
 		byte[] taillefloat = new byte[4];
@@ -93,6 +98,16 @@ public class ResourceReader
 			return -1;
 		}
 		return BitConverter.ToSingle (taillefloat, 0);
+	}
+
+	public Vector3 readVector3 (Stream stream)
+	{
+		return new Vector3 (readFloat (stream), readFloat (stream), readFloat (stream));
+	}
+
+	public Quaternion readQuaternion (Stream stream)
+	{
+		return new Quaternion (readFloat (stream), readFloat (stream), readFloat (stream), readFloat (stream));
 	}
 
 	public  String readString(Stream stream, int size){
@@ -111,6 +126,7 @@ public class ResourceReader
 	public  byte[] readByte(Stream stream, int size){
 		byte[] nomByte = new byte[size];
 		int nbRead = stream.Read (nomByte, 0, size);
+		//Debug.Log ("nbRead: " + nbRead+", size: "+size);
 		if (nbRead == 0) 
 		{
 			//Debug.Log ("end of stream nom");
@@ -378,9 +394,7 @@ public class ResourceReader
 		//Debug.Log (triangleListe.Count);
 		return new MeshCreator(ID, vertices, triangleListe, normales, textures, mg);
 	}
-
-
-
+	
 	public  ImageCreator readImage(Stream stream)
 	{
 		Debug.Log ("Lecture image--------------------------------");
@@ -409,13 +423,52 @@ public class ResourceReader
 		return new ImageCreator(width, height, depth, nbChannels, sizeData, data,ID);
 	}
 
-	public  EntityCreator readEntity (MemoryStream memoryStream)
+	public  EntityCreator readEntity (Stream stream)
 	{
-		throw new NotImplementedException ();
+		Guid ID = readGuid (stream);
+		Int64 size = readInt64 (stream);
+		String nom = readString(stream,(int) size);
+
+		size = readInt64 (stream);
+		string realName = readString(stream,(int) size);
+
+		Guid cell = readGuid (stream);
+		Vector3 position = readVector3 (stream);
+		Quaternion rotation = readQuaternion(stream);
+		Vector3 scale = readVector3(stream);
+
+		List<string> semantics =new List<string>();
+		Int32 nbString = readInt32 (stream);
+		for (int i = 0; i < nbString; i++) 
+		{
+			size = readInt64(stream);
+			semantics.Add(readString(stream,(int) size));
+		}
+		Guid meshId = readGuid(stream);
+		return new EntityCreator (ID, realName, cell, position, rotation, scale, semantics, meshId);
 	}
 
-	public  ChunkCreator readChunk (MemoryStream memoryStream)
+	public  ChunkCreator readChunk (Stream stream)
 	{
-		throw new NotImplementedException ();
+		Guid ID = readGuid (stream);
+		Int64 size = readInt64 (stream);
+		String nom = readString(stream,(int) size);
+
+		size = readInt64 (stream);
+		string realName = readString(stream,(int) size);
+
+		Guid world = readGuid (stream);
+		Vector2 indice = readVector2ui (stream);
+		Vector3 extents = readVector3 (stream);
+		Vector3 position = readVector3 (stream);
+
+		Int32 nbGo = readInt32 (stream);
+		List<Guid> objects =new List<Guid>();
+		for (int i = 0; i < nbGo; i++) 
+		{
+			objects.Add(readGuid(stream));
+		}
+
+		return new ChunkCreator (ID,realName,world,indice,extents,position,objects);
 	}
 }

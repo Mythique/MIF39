@@ -6,15 +6,37 @@ using System.IO;
 
 public class EntityCreator
 {
-	public Guid id;
-
-	public EntityCreator(Guid id){
+	public Guid id {get; set;}
+	string realName;
+	Guid cell;
+	Vector3 position;
+	Quaternion rotation;
+	Vector3 scale;
+	List<string> semantics;
+	Guid meshId;
+	
+	public EntityCreator(Guid id, string realName, Guid cell, Vector3 position, Quaternion rotation, Vector3 scale, List<string> semantics, Guid meshId)
+	{
 		this.id = id;
+		this.realName = realName;
+		this.cell = cell;
+		this.position = position;
+		this.rotation = rotation;
+		this.semantics = semantics;
+		this.meshId = meshId;
 	}
-
+	
 	public Entity create (ref Entity entity)
 	{
-		throw new NotImplementedException ();
+		GameObject go = entity.go;
+		go.name = realName;
+		go.transform.position = position;
+		go.transform.rotation = rotation;
+		go.transform.localScale = scale;
+		entity.semantics = semantics;
+		ResourceLoader.getInstance ().getMeshStruct (meshId).transform.parent = go.transform;
+
+		return entity;
 	}
 }
 

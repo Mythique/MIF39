@@ -10,10 +10,12 @@ public class ResourceLoader
 	public static readonly Guid MESH_GUID=new Guid("4394cb82-98f0-f0ef-1e3a-e4956402ace7");
 	public static readonly Guid ENTITY_GUID=new Guid();
 	public static readonly Guid CHUNK_GUID=new Guid();
+	public static readonly Guid WORLD_GUID=new Guid();
 	public static readonly Guid IMAGE_GUID=new Guid("0685f590-f83a-0e1f-d272-2a46b8321d24");
 
 	private static ResourceLoader loader;
 
+	private Dictionary<Guid,World> world;
 	private Dictionary<Guid,GameObject> meshes;
 	private Dictionary<Guid,Chunk> chunks;
 	private Dictionary<Guid,Entity> entities;
@@ -45,9 +47,13 @@ public class ResourceLoader
 			MemoryStream stream=new MemoryStream (resource);
 			Resource res = ResourceReader.getInstance().readResource(stream);
 			byte[] data = new byte[res.dataSize];
-			stream.Read(data,0,res.dataSize);
+			int nbRead =stream.Read(data,0,res.dataSize);
+			Debug.Log ("nbRead: " + nbRead+", size: "+res.dataSize);
 			Logger.Debug (res.nom);
 			Logger.Debug (res.ID);
+			if(res.ID.Equals(WORLD_GUID)){
+				loadWorld(data);
+			}
 			if(res.ID.Equals(MESH_GUID)){
 				loadMesh(data);
 			}
@@ -66,6 +72,13 @@ public class ResourceLoader
 			return true;
 		}
 		return false;
+	}
+
+	void loadWorld (byte[] data)
+	{
+		/*WorldCreator wc = ResourceReader.getInstance ().readWorld (new MemoryStream (data));
+		World w = getWorld (wc.id);
+		wc.create (w);*/
 	}
 
 	void loadMesh (byte[] data)
@@ -115,9 +128,11 @@ public class ResourceLoader
 		 * Juste avant de retourner, on fait la requete au serveur via le client
 		 * Si l'id est dans la map, on le donne et finish
 		 */
-	public GameObject getMeshStruct(Guid id) {
+	public GameObject getMeshStruct(Guid id) 
+	{
 		Logger.Debug("getMeshStruct "+id.ToString());
-		if (!meshes.ContainsKey (id)) {
+		if (!meshes.ContainsKey (id))
+		{
 			/*=lock(objAcreer){
 				objAcreer.Enqueue(id);
 			}*/
@@ -153,7 +168,7 @@ public class ResourceLoader
 
 	public Material getMaterial(Guid id) {
 		if (!materials.ContainsKey (id)) {
-			materials[id] = new Material(Shader.Find("Standard"));
+			materials[id] = new Material(Shader.Find("Diffuse"));
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
 		Logger.Debug("Fin Chargement Mat");

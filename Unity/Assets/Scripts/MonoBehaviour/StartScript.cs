@@ -5,17 +5,17 @@ using System.Collections;
 
 public class StartScript : MonoBehaviour {
 	
-	public string ip="192.168.1.108";
+	public string ip="192.168.1.116";
 	public int port=3000;
 	public Logger.Type logLvl=Logger.Type.NONE;
 	public string logFile="";
 	public GameObject obj;
 	private GameObject ms;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 
-		//Client.getInstance ().Disconnect();
-		//Client.getInstance ().Connect (ip,port);
+		Client.getInstance ().Connect (ip,port);
 
 		//Thread t = new Thread (resourceLoad);
 		//Thread t2 = new Thread (testLoad);
@@ -39,10 +39,7 @@ public class StartScript : MonoBehaviour {
 		loader.load ();
 		loader.load ();
 		loader.load ();
-		
-
-
-
+		Client.getInstance ().Disconnect();
 	}
 
 

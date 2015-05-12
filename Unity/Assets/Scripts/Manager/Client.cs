@@ -54,7 +54,7 @@ public int port=3000;
 	 */
 	public void ask(ServerAnswerManager.Type type,Guid param)
 	{
-		Connect (ip, port);
+		//Connect (ip, port);
 		bool read = false;
 		int msgSize;
 		Stream stm = tcpclnt.GetStream();
@@ -66,7 +66,7 @@ public int port=3000;
 		stm.Write(guid, 0, guid.Length);
 		stm.Flush ();
 		ServerAnswerManager.getInstance ().addContents (stm);
-		Disconnect();
+		//Disconnect();
 	}
 
 	/*

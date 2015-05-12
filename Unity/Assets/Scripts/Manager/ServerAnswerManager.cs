@@ -40,12 +40,18 @@ public class ServerAnswerManager{
 		Debug.Log ("Type: "+type);
 		length = ResourceReader.getInstance().readInt32 (ste);
 		Debug.Log ("Taille: "+length);
-		List<Guid> li = new List<Guid>(length);
 
 		switch (type) {
 		case (int)Type.SHARED_R : 
 			byte[] contenu = new byte[length];
-			ste.Read(contenu, 0, length);
+			int sommeRead=0;
+			do{
+				int nbRead=ste.Read(contenu, sommeRead, length-sommeRead);
+				sommeRead+=nbRead;
+			}
+			while(sommeRead!=length);
+
+			Debug.Log("------------------------------------------- :"+sommeRead+" "+length);
 			ressourceQueue.Enqueue(contenu);
 			break;
 
