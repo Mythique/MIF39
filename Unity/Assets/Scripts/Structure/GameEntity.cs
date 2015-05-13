@@ -9,7 +9,7 @@ public class GameEntity
 {
 	public GameObject go{ get; set; }
 	public List<string> semantics{ get; set; }
-	public List<Guid> elements{ get; set; }
+	public List<GameEntityElement> elements{ get; set; }
 
 	public GameEntity(){
 		go = new GameObject ();

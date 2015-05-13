@@ -29,7 +29,7 @@ public class ResourceReader
 		}
 
 		String gu = System.Text.Encoding.ASCII.GetString (guid);
-		//Debug.Log ("gu : " + gu);
+		Debug.Log ("gu : " + gu);
 		return new Guid(gu);
 	}
 
@@ -450,6 +450,8 @@ public class ResourceReader
 
 	public GameEntityCreator readGameEntity (MemoryStream stream)
 	{
+		Debug.Log ("readGameEntity");
+
 		Guid ID = readGuid (stream);
 		Int64 size = readInt64 (stream);
 		String nom = readString(stream,(int) size);
@@ -457,24 +459,65 @@ public class ResourceReader
 
 		size = readInt64 (stream);
 		String realName = readString(stream,(int) size);
+		Debug.Log ("realName : " +realName);
+
+		List<string> semantics =new List<string>();
+
+		//readInt32 (stream);
+		Int32 nbString = readInt32 (stream);
+		Debug.Log ("nbString : " +nbString);
+
+
+		for (int i = 0; i < nbString; i++) 
+		{
+			size = readInt64(stream);
+			Debug.Log ("size : " +size);
+			String temp = readString(stream,(int) size);
+			Debug.Log ("nom semantics : " + temp); 
+			semantics.Add(temp);
+		}
+
+
+		List<GameEntityElement> elements =new List<GameEntityElement>();
+		Int32 nbGuid = readInt32 (stream);
+		Debug.Log ("nbGuid : " + nbGuid); 
+
+		for (int i = 0; i < nbGuid; i++) 
+		{
+			elements.Add(readGameEntityElement(stream));
+		}
+
+		return new GameEntityCreator (ID, realName, semantics, elements);
+	}
+
+	GameEntityElement readGameEntityElement (MemoryStream stream)
+	{
+		Debug.Log ("readGameEntityElement");
+
+		Int64 taille = readInt64(stream);
+		String nom = readString(stream,(int)taille);
+		Debug.Log("nom entityElement : " + nom);
+			
+		Guid id = readGuid (stream);
+		Vector3 position = readVector3 (stream);
+		Quaternion rotation = readQuaternion (stream);
+		Vector3 scale = readVector3 (stream);
 
 		List<string> semantics =new List<string>();
 		Int32 nbString = readInt32 (stream);
 		for (int i = 0; i < nbString; i++) 
 		{
-			size = readInt64(stream);
+			Int64 size = readInt64(stream);
 			semantics.Add(readString(stream,(int) size));
 		}
-
-
-		List<Guid> elements =new List<Guid>();
+		List<Guid> ressources =new List<Guid>();
 		Int32 nbGuid = readInt32 (stream);
 		for (int i = 0; i < nbGuid; i++) 
 		{
-			elements.Add(readGuid(stream));
+			ressources.Add(readGuid(stream));
 		}
 
-		return new GameEntityCreator (ID, realName, semantics, elements);
+		return new GameEntityElement (nom, id, position, rotation, scale, semantics, ressources);
 	}
 
 	public  ChunkCreator readChunk (Stream stream)

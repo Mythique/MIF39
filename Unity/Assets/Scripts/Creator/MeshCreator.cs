@@ -77,17 +77,12 @@ public class MeshCreator
 		List<Vector3> vers = new List<Vector3>();
 		List<Vector2> text = new List<Vector2>();
 		Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
-	
-		DateTime  debutforeach = DateTime.Now;
 
 		int ind=0;
 		List<int> tsansmat = new List<int>();
 		foreachTriangle(triangleListe,ref ind, has_norm, has_text,ref vers,ref norms,ref text,ref triangles,ref tsansmat);
 
-		DateTime  finforeach = DateTime.Now;
-		//Debug.Log ("premier foreach :" + (debutforeach- finforeach));
 
-		DateTime  debutforeach2 = DateTime.Now;
 		List<List<int>> groups = new List<List<int>> ();
 		for (int j=0; j<matGroup.Count; j++) {
 			List<int> ts = new List<int>();
@@ -96,8 +91,6 @@ public class MeshCreator
 			groups.Add(ts);
 
 		}
-		DateTime  finforeach2 = DateTime.Now;
-		//Debug.Log ("deuxieme foreach :" + (debutforeach2- finforeach2));
 
 		mesh.vertices = vers.ToArray ();
 		mesh.triangles = triangles.ToArray();

@@ -20,10 +20,11 @@ public class StartScript : MonoBehaviour {
 		//Thread t = new Thread (resourceLoad);
 		//Thread t2 = new Thread (testLoad);
 		Logger.logLvl = logLvl;
-		Logger.logFile = logFile;
+		//Logger.logFile = logFile;
 		//t.Start ();
 		//t2.Start ();
-		ms = ResourceLoader.getInstance ().getMeshStruct (new System.Guid ("2aeee241-1309-c2e1-69d1-0d3485185752"));
+		//ms = ResourceLoader.getInstance ().getMeshStruct (new System.Guid ("02777adf-d977-abc5-53a1-3225eb60470a"));
+		ms = ResourceLoader.getInstance ().getGameEntity (new System.Guid ("212c94ef-7a57-2f25-0db9-d1eaa96c2506")).go;
 		ms.transform.parent = obj.transform;
 
 		ResourceLoader loader = ResourceLoader.getInstance ();
@@ -46,15 +47,92 @@ public class StartScript : MonoBehaviour {
 		loader.load ();
 		loader.load ();
 		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+		loader.load ();
+
+
 		//Client.getInstance ().Disconnect();
 	}
 
 
-	void testLoad (){
+	/*void testLoad (){
 		ms = ResourceLoader.getInstance ().getMeshStruct (new System.Guid ("2aeee241-1309-c2e1-69d1-0d3485185752"));
 		
 
-	}
+	}*/
 
 	void resourceLoad (){
 		ResourceLoader loader = ResourceLoader.getInstance ();

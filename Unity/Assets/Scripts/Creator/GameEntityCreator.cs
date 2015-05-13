@@ -10,9 +10,9 @@ public class GameEntityCreator
 	public Guid ID{ get; set;}
 	private string realName;
 	private List<string> semantics;
-	private List<Guid> elements;
+	private List<GameEntityElement> elements;
 
-	public GameEntityCreator (Guid ID, string realName, List<string> semantics, List<Guid> elements)
+	public GameEntityCreator (Guid ID, string realName, List<string> semantics, List<GameEntityElement> elements)
 	{
 		this.ID = ID;
 		this.realName = realName;
@@ -26,11 +26,23 @@ public class GameEntityCreator
 		ge.go.name = realName;
 		ge.elements = elements;
 		ResourceLoader loader = ResourceLoader.getInstance ();
-		foreach (Guid id in elements) {
+		foreach (GameEntityElement elem in elements) {
+			GameObject elemGo =new GameObject();
+			elemGo.transform.position=elem.position;
+			elemGo.transform.rotation=elem.rotation;
+			elemGo.transform.localScale=elem.scale;
+			elemGo.transform.SetParent(ge.go.transform, false);
+			foreach(Guid id in elem.ressources)
+			{ 
+				GameObject des= ResourceLoader.getInstance().getMeshStruct(id);
+				des.SetActive(false);
+				GameObject go=new GameObject ();
+				go.AddComponent<Instanciate>();
+				go.GetComponent<Instanciate>().instanceOf = id;
 
-			GameObject go=loader.getMeshStruct(id);
-			GameObject goi=(GameObject) GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
-			goi.transform.parent=ge.go.transform;
+				GameObject goi=go;//(GameObject) GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
+				goi.transform.SetParent(elemGo.transform, false);
+			}
 		}
 
 		return ge;
