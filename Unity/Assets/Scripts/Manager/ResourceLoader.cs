@@ -32,6 +32,7 @@ public class ResourceLoader
 		meshes = new Dictionary<Guid,GameObject> ();
 		chunks = new Dictionary<Guid, Chunk> ();
 		entities = new Dictionary<Guid, Entity> ();
+		gameEntities = new Dictionary<Guid, GameEntity>();
 		materials = new Dictionary<Guid, Material> ();
 		images = new Dictionary<Guid, Texture2D> ();
 		objAcreer = new Queue<Guid> ();
