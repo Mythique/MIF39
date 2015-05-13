@@ -28,8 +28,8 @@ bool ServerManager::linkTcp(EncTcpStartPoint& tcp) {
 void ServerManager::writeToFile(EncByteBuffer& b)
 {
    unsigned char* data=b.getData();
-    //if(written)
-        //return;
+    /*if(written)
+        return;
 
     std::cout << std::endl;
 
@@ -45,8 +45,13 @@ void ServerManager::writeToFile(EncByteBuffer& b)
             fprintf(file, "%c",c);
         }
     fclose(file);
-    //*/
-    written = true;
+
+    written = true;//*/
+
+   std::ofstream out;
+   out.open("data.bin");
+   out.write((char*)data,b.getLength());
+   out.close();
 }
 
 ServerManager *ServerManager::getInstance()
@@ -113,7 +118,7 @@ bool ServerManager::interpret(QUuid client){
         return false;
     }
 
-    std::cout << "Client OK" << std::endl;
+    //std::cout << "Client OK" << std::endl;
 
     EncByteBuffer requete, reponse;
     requete.setType(-2);
@@ -125,13 +130,13 @@ bool ServerManager::interpret(QUuid client){
     while(requete.getType() == -2) {
 
         if(connection->isStarted()){
-            std::cout << "EncTcpStartPoint try receiving" << std::endl;
+            //std::cout << "EncTcpStartPoint try receiving" << std::endl;
             
 			if(! connection->receive(client, requete) ) {
 				std::cout << "Not able to receive" <<std::endl;
 				return false;
 			}
-            std::cout << "After receiving " << requete.getType() << "/" << requete.getLength() << std::endl;
+            //std::cout << "After receiving " << requete.getType() << "/" << requete.getLength() << std::endl;
         }
         else
         {
@@ -140,23 +145,26 @@ bool ServerManager::interpret(QUuid client){
 
         }
     }
-        std::cout << "Receiving request" << std::endl;
-        std::cout << "Type " << requete.getType() << " , length " << requete.getLength() << std::endl;
+        //std::cout << "Receiving request" << std::endl;
+        //std::cout << "Type " << requete.getType() << " , length " << requete.getLength() << std::endl;
         
 		switch(requete.getType()){
 
             case ServerManager::SHARED_R :
-                std::cout << "Received Request for resource" << std::endl;
+                //std::cout << "Received Request for resource " << std::endl;
                 l = requete.getLength();
                 req = QUuid((const char*)(requete.getData()));
+                std:: cout << "Getting " << req.toString().toStdString() << std::endl;
                 res = ServerManager::getInstance()->getRessource(req);
                 reponse.setType(SHARED_R);
+                if(res.isNull()) {
+                    return false;
+                }
                 resource = ResourceHolder::ToBuffer(res);
                 reponse.append(resource);
                 break;
 
             case ServerManager::TEST :
-                std::cout << "Received TEST" << std::endl;
             	reponse.setType(TEST);
                 l = requete.getLength();
                 ::fromBuffer(requete, l, req);

@@ -35,22 +35,22 @@ int main(int argc, char** argv) {
     std::cout << "Got ptr" << std::endl;
     QUuid quid = ptr.data()->getUUID();
     std::cout << "quid got" << std::endl;*/
-    /*std::cout << "Before getting quid" << std::endl;
-    SharedResourceList list = ResourceHolder::GetAllByTypeName("GameEntity");
+    std::cout << "Before getting quid" << std::endl;
+    SharedResourceList list = ResourceHolder::GetAllByTypeName("Mesh");
     std::cout << "list got " << list.size() << std::endl;
-    QUuid entity = list[0] ->getUUID();
-    std::cout << "entity got" << std::endl;*/
+    QUuid mesh = list[0] ->getUUID();
+    std::cout << "entity got" << std::endl;
 
-    //std::cout << "QUuid : " << entity.toString().toStdString() << std::endl;
+    std::cout << "QUuid : " << mesh.toString().toStdString() << std::endl;
 	
 
     while(true) {
         while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
         }
-        std::cout << "Client found" <<  client.toString().toStdString() << std::endl;
+        //std::cout << "Client found" <<  client.toString().toStdString() << std::endl;
         ServerManager::getInstance()->interpret(client);
-        std::cout << "Client disconnected" << std::endl;
+        //std::cout << "Client disconnected" << std::endl;
         //client = fake;
     }//*/
 	
