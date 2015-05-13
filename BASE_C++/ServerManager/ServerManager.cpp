@@ -136,6 +136,10 @@ bool ServerManager::interpret(QUuid client){
 				std::cout << "Not able to receive" <<std::endl;
 				return false;
 			}
+            if(!connection->hasEndPoint() ){
+                std::cout << "No end to receive frome" <<std::endl;
+                return false;
+            }
             //std::cout << "After receiving " << requete.getType() << "/" << requete.getLength() << std::endl;
         }
         else

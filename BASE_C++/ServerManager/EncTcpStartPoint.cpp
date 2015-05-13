@@ -33,10 +33,11 @@ bool EncTcpStartPoint::send(QUuid client, const EncByteBuffer& buffer) {
 
 bool EncTcpStartPoint::receive(QUuid client, EncByteBuffer& buffer) {
     //std::cout << "EncTcpStartPoint receive" << std::endl;
-    bool result = true;
+    bool result = false;
     int type;
     unsigned int lg;
     unsigned int length;
+
     lg = mSocket->receiveData(client, (unsigned char*) & type, sizeof(int));
     if (lg != sizeof(int)) {
         std::cout << "invalid type" << std::endl;
@@ -60,9 +61,11 @@ bool EncTcpStartPoint::receive(QUuid client, EncByteBuffer& buffer) {
                     }
                     else {
                         //std::cout << "data got" << std::endl;
+                        result = true;
                     }
         }
     }
     mSocket->cleanUp(mStartPointOptions.cbDisconnect);
+
     return result ;
 }

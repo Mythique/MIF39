@@ -19,6 +19,7 @@ int main() {
 
     while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
+
     }
     while(ServerManager::getInstance()->getConnection()->isStarted())
         ServerManager::getInstance()->interpret(client);
