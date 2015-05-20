@@ -163,6 +163,7 @@ bool ServerManager::interpret(QUuid client){
                 reponse.setType(SHARED_R);
                 if(res.isNull()) {
 					reponse = EncByteBuffer(ERROR);
+                	reponse.append(ByteBuffer((unsigned char*)(req.toByteArray().data()), req.toByteArray().size()))
                 }
 				else{
                 	resource = ResourceHolder::ToBuffer(res);
