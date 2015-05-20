@@ -22,7 +22,6 @@ int main(int argc, char** argv) {
     ServerManager::getInstance()->linkTcp(tcp);
     ServerManager::getInstance()->startConnection();
     QUuid client;
-	int pid;
 
     /* Tant qu'on est actif
      *  Connexion tant que pas de client
@@ -33,8 +32,7 @@ int main(int argc, char** argv) {
     FileDescriptor file ( argv[1]);
     ResourceHolder::Import(argv[1]);
     std::cout << "** Resource loaded : " << ResourceHolder::AllKeys ().size () << std::endl;
-    
-	std::cout << "Before getting quid" << std::endl;
+    std::cout << "Before getting quid" << std::endl;
     SharedResourceList list = ResourceHolder::GetAllByTypeName("Mesh");
     std::cout << "list got " << list.size() << std::endl;
     QUuid mesh = list[0] ->getUUID();
@@ -47,25 +45,10 @@ int main(int argc, char** argv) {
         while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
         }
-        
-		pid = -1;
-		pid = fork();
-		if(pid == 0){
-
-			while(true){
-
-				if(!ServerManager::getInstance()->interpret(client)){
-            		
-					std::cout << "Déconnexion du client" << std::endl;
-					exit(0);
-				}
-			}
+        if(!ServerManager::getInstance()->interpret(client)){
+            client = fake;
+            std::cout << "Effacement du client" << std::endl;
         }
-		else if(pid == -1){
-			std::cout << "Alerte : erreur lors du Fork. Cient non traité" << std::endl;
-		}
-		else
-			client == fake;
     }
 
     ServerManager::getInstance()->stopConnection();
