@@ -162,7 +162,7 @@ bool ServerManager::interpret(QUuid client){
                 res = ServerManager::getInstance()->getRessource(req);
                 reponse.setType(SHARED_R);
                 if(res.isNull()) {
-					reponse.setType(ERROR);
+					reponse = EncByteBuffer(ERROR);
                 }
 				else{
                 	resource = ResourceHolder::ToBuffer(res);
