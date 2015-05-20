@@ -5,6 +5,7 @@ using System;
 public class Instanciate : MonoBehaviour {
 	bool done = false;
 	public Guid instanceOf;
+	public GameEntity ge; 
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +25,7 @@ public class Instanciate : MonoBehaviour {
 			go.transform.SetParent(gameObject.transform, false); 
 			go.SetActive(true);
 			done = true;
+			ge.isLoaded=true;
 		}
 		tmp.SetActive (false);
 	}

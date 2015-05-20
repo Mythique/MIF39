@@ -30,15 +30,16 @@ public class ChunkCreator
 		GameObject go = chunk.go;
 		chunk.objects = objects;
 		go.name = realName;
-		go.transform.localScale = extents;
+		//TODO extends
+		//go.transform.localScale = extents;
 		go.transform.position = position;
 		chunk.indice = indice;
 
 		foreach (Guid id in objects) {
 
 			Entity entity=ResourceLoader.getInstance().getEntity(id);
-			GameObject go2=(GameObject) GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
-			go2.transform.parent=go.transform;
+			//GameObject go2=(GameObject) GameObject.Instantiate(entity.go,Vector3.zero,Quaternion.identity);
+			entity.go.transform.parent=go.transform;
 		}
 
 		return chunk;

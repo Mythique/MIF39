@@ -23,105 +23,17 @@ public class StartScript : MonoBehaviour {
 		//Logger.logFile = logFile;
 		//t.Start ();
 		//t2.Start ();
-		//ms = ResourceLoader.getInstance ().getMeshStruct (new System.Guid ("02777adf-d977-abc5-53a1-3225eb60470a"));
-		ms = ResourceLoader.getInstance ().getGameEntity (new System.Guid ("212c94ef-7a57-2f25-0db9-d1eaa96c2506")).go;
-		ms.transform.parent = obj.transform;
 
-		ResourceLoader loader = ResourceLoader.getInstance ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
-		loader.load ();
+		//ms = ResourceLoader.getInstance ().getMeshStruct (new System.Guid ("02777adf-d977-abc5-53a1-3225eb60470a"));
+
+		//ms = ResourceLoader.getInstance ().getGameEntity (new System.Guid ("212c94ef-7a57-2f25-0db9-d1eaa96c2506")).go;
+
+		//ms = ResourceLoader.getInstance ().getEntity (new System.Guid ("011c8ad0-af3a-ba7e-30f5-24b6dedda0d1")).go;
+
+		ms = ResourceLoader.getInstance ().getChunk (new System.Guid ("cd9bcf09-99a1-92f5-9729-53e79b50873f")).go;
+		//ms = ResourceLoader.getInstance ().getChunk (new System.Guid ("0688cdf6-a57c-3e81-6efb-f785e0ece2e1")).go;
+		//ms = ResourceLoader.getInstance ().getChunk (new System.Guid ("07458ae8-1b92-ebe6-64ca-0c4ea248d0c4")).go;
+		ms.transform.parent = obj.transform;
 
 
 		//Client.getInstance ().Disconnect();
@@ -144,6 +56,8 @@ public class StartScript : MonoBehaviour {
 	}
 
 	void Update(){
+		ResourceLoader loader = ResourceLoader.getInstance ();
+		loader.load ();
 		/*Guid id = ResourceLoader.getInstance ().dequeueObjACreer ();
 		if (id != Guid.Empty) {
 			Logger.Debug("Create GameObj "+id.ToString());

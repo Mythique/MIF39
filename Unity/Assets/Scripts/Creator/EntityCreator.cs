@@ -24,6 +24,7 @@ public class EntityCreator
 		this.rotation = rotation;
 		this.semantics = semantics;
 		this.meshId = meshId;
+		this.scale = scale;
 	}
 	
 	public Entity create (ref Entity entity)
@@ -35,10 +36,13 @@ public class EntityCreator
 		go.transform.rotation = rotation;
 		go.transform.localScale = scale;
 		entity.semantics = semantics;
-		//TODO
 		GameObject go2=ResourceLoader.getInstance ().getGameEntity(meshId).go;
-		GameObject go3=(GameObject) GameObject.Instantiate(go2,Vector3.zero,Quaternion.identity);
-		go3.transform.parent = go.transform;
+		//go2.SetActive (false);
+		GameObjectUtility.ChangeLayersRecursively(go2.transform,"cache");
+		//go2.layer = LayerMask.NameToLayer ("cache");
+		go.AddComponent<InstanciateEntity>();
+		go.GetComponent<InstanciateEntity> ().instanceOf = meshId;
+		go.transform.SetParent(go.transform, false);
 
 		return entity;
 	}

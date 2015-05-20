@@ -34,14 +34,17 @@ public class GameEntityCreator
 			elemGo.transform.SetParent(ge.go.transform, false);
 			foreach(Guid id in elem.ressources)
 			{ 
-				GameObject des= ResourceLoader.getInstance().getMeshStruct(id);
-				des.SetActive(false);
-				GameObject go=new GameObject ();
-				go.AddComponent<Instanciate>();
-				go.GetComponent<Instanciate>().instanceOf = id;
+				if(id.CompareTo(new Guid())!=0){
+					GameObject des= ResourceLoader.getInstance().getMeshStruct(id);
+					des.SetActive(false);
+					GameObject go=new GameObject ();
+					go.AddComponent<Instanciate>();
+					go.GetComponent<Instanciate>().instanceOf = id;
+					go.GetComponent<Instanciate>().ge = ge;
 
-				GameObject goi=go;//(GameObject) GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
-				goi.transform.SetParent(elemGo.transform, false);
+					GameObject goi=go;//(GameObject) GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
+					goi.transform.SetParent(elemGo.transform, false);
+				}
 			}
 		}
 

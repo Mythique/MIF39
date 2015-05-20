@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class ServerAnswerManager{
 
-	public enum Type : int {COMPRESSED=1, SHARED_R=2, ID_CHUNK=4, ID_OBJ=8, ID_ASSET=16, ID_THINGIE=32, TEST =225};
+	public enum Type : int {COMPRESSED=1, SHARED_R=2, EMPTY=8};
 	/*
 	 * Attributs
 	 */
@@ -41,22 +41,24 @@ public class ServerAnswerManager{
 		length = ResourceReader.getInstance().readInt32 (ste);
 		Debug.Log ("Taille: "+length);
 
+		byte[] contenu =new byte[1];
+		if (length != 0) {
+			contenu = new byte[length];
+			int sommeRead = 0;
+			do {
+					int nbRead = ste.Read (contenu, sommeRead, length - sommeRead);
+					sommeRead += nbRead;
+			} while(sommeRead!=length);
+
+		}
+
 		switch (type) {
 		case (int)Type.SHARED_R : 
-			byte[] contenu = new byte[length];
-			int sommeRead=0;
-			do{
-				int nbRead=ste.Read(contenu, sommeRead, length-sommeRead);
-				sommeRead+=nbRead;
-			}
-			while(sommeRead!=length);
-
-			Debug.Log("------------------------------------------- :"+sommeRead+" "+length);
 			ressourceQueue.Enqueue(contenu);
 			break;
 
-		case (int) Type.TEST :
-			testResult = true;
+		case (int) Type.EMPTY :
+			Debug.Log("empty");
 			break;
 		default :
 				return false;
