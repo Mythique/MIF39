@@ -38,6 +38,11 @@ int main(int argc, char** argv) {
     QUuid mesh = list[0] ->getUUID();
     std::cout << "entity got" << std::endl;
 
+
+	SharedResourceList listGa = ResourceHolder::GetAllByTypeName("GameObject");
+	QUuid gobj = listGa[0] ->getUUID();
+	std::cout << "GameObject : " << gobj.toString().toStdString() << std::endl;
+
     std::cout << "QUuid : " << mesh.toString().toStdString() << std::endl;
 	
 
