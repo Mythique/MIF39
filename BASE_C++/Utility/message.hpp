@@ -30,9 +30,11 @@ public:
         return data.getData();
     }*/
 
-    EncByteBuffer(){
+    EncByteBuffer() : ByteBuffer() {
         type = -1;
     }
+
+    EncByteBuffer(int type) : ByteBuffer(), type(type) { }
 
     EncByteBuffer(unsigned char * msg, unsigned long long length) : ByteBuffer(msg, length), type(-1){
     }
