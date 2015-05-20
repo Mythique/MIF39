@@ -47,11 +47,26 @@ int main(int argc, char** argv) {
         while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
         }
-		if(!ServerManager::getInstance()->interpret(client)){
-			std::cout << "Déconnexion du client" << std::endl;
-			client == fake;
+        
+		pid = -1;
+		pid = fork();
+		if(pid == 0){
+
+			while(true){
+
+				if(!ServerManager::getInstance()->interpret(client)){
+            		
+					std::cout << "Déconnexion du client" << std::endl;
+					exit(0);
+				}
+			}
+        }
+		else if(pid == -1){
+			std::cout << "Alerte : erreur lors du Fork. Cient non traité" << std::endl;
 		}
-	}
+		else
+			client == fake;
+    }
 
     ServerManager::getInstance()->stopConnection();
     return 0;
