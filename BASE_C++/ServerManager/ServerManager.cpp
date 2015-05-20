@@ -162,11 +162,12 @@ bool ServerManager::interpret(QUuid client){
                 res = ServerManager::getInstance()->getRessource(req);
                 reponse.setType(SHARED_R);
                 if(res.isNull()) {
-					std::cout << "Erreur : la ressource demandée n'existe pas" << std::endl;
-                    return false;
+					reponse.setType(ERROR);
                 }
-                resource = ResourceHolder::ToBuffer(res);
-                reponse.append(resource);
+				else{
+                	resource = ResourceHolder::ToBuffer(res);
+                	reponse.append(resource);
+				}
                 break;
 
             case ServerManager::TEST :
