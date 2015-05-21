@@ -544,6 +544,66 @@ public class ResourceReader
 		return new ChunkCreator (ID,realName,world,indice,extents,position,objects);
 	}
 
+	public WorldCreator readWorld (MemoryStream stream)
+	{
+		Guid ID = readGuid (stream);
+		Int64 size = readInt64 (stream);
+		String nom = readString(stream,(int) size);
+
+		size = readInt64 (stream);
+		string realName = readString(stream,(int) size);
+
+		Vector3 extents = readVector3 (stream);
+		Vector2 subdivision = readVector2ui (stream);
+
+		Int32 nbSpawnPoint = readInt32 (stream);
+		List<SpawnPoint> spawnPoints =new List<SpawnPoint>();
+		for (int i = 0; i < nbSpawnPoint; i++) 
+		{
+			spawnPoints.Add(readSpawnPoint(stream));
+		}
+
+		List<string> semantics =new List<string>();
+		Int32 nbString = readInt32 (stream);
+		for (int i = 0; i < nbString; i++) 
+		{
+			Int64 si = readInt64(stream);
+			semantics.Add(readString(stream,(int) si));
+		}
+
+		List<Guid> cells =new List<Guid>();
+		Int32 nbGuid = readInt32 (stream);
+		for (int i = 0; i < nbGuid; i++) 
+		{
+			cells.Add(readGuid(stream));
+		}
+
+
+		return new WorldCreator (ID,realName,extents,subdivision,spawnPoints,semantics,cells);
+	}
+
+	public SpawnPoint readSpawnPoint (MemoryStream stream)
+	{
+		Int64 s = readInt64 (stream);
+		string realName = readString(stream,(int) s);
+		s = readInt64 (stream);
+		realName = readString(stream,(int) s);
+		//Debug.Log (realName);
+		Guid worldId = readGuid (stream);
+		Vector3 location = readVector3 (stream);
+		float size = readFloat(stream);
+
+		List<string> semantics =new List<string>();
+		Int32 nbString = readInt32 (stream);
+		for (int i = 0; i < nbString; i++) 
+		{
+			Int64 si = readInt64(stream);
+			semantics.Add(readString(stream,(int) si));
+		}
+
+		return new SpawnPoint (realName, worldId, location, size, semantics);
+	}
+
 	public LightCreator readLight(Stream stream)
 	{
 		Guid ID = readGuid (stream);

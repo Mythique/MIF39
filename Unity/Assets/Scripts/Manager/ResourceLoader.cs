@@ -36,6 +36,7 @@ public class ResourceLoader
 		materials = new Dictionary<Guid, Material> ();
 		images = new Dictionary<Guid, Texture2D> ();
 		objAcreer = new Queue<Guid> ();
+		world=new Dictionary<Guid,World>();
 	}
 
 	public static ResourceLoader getInstance(){
@@ -82,9 +83,9 @@ public class ResourceLoader
 
 	void loadWorld (byte[] data)
 	{
-		/*WorldCreator wc = ResourceReader.getInstance ().readWorld (new MemoryStream (data));
-		World w = getWorld (wc.id);
-		wc.create (w);*/
+		WorldCreator wc = ResourceReader.getInstance ().readWorld (new MemoryStream (data));
+		World w = getWorld (wc.ID);
+		wc.create (ref w);
 	}
 
 	void loadMesh (byte[] data)
@@ -213,6 +214,16 @@ public class ResourceLoader
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
 		return gameEntities[id];
+	}
+
+	public World getWorld (Guid id)
+	{
+		if (!world.ContainsKey (id)) {
+			World ge =new World();
+			world[id] = ge;
+			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
+		}
+		return world[id];
 	}
 
 	public void addObj(GameObject obj ,Guid id){
