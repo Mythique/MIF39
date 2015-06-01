@@ -23,12 +23,15 @@ public class LightCreator
 		this.type = type;
 	}
 	
-	public GameObject create (ref GameObject light)
+	public Asset create (ref Asset asset)
 	{
-		Light lightComp = light.AddComponent<Light>();
+		Light lightComp = asset.go.AddComponent<Light>();
 		lightComp.intensity = intensity;
 		lightComp.color =new Color(color.x,color.y,color.z);
 		lightComp.type = type==Type.Point?LightType.Point:type==Type.Direction?LightType.Directional:type==Type.Surface?LightType.Area:LightType.Point;
-		return light;
+		lightComp.enabled = true;
+
+		asset.loaded = true;
+		return asset;
 	}
 }

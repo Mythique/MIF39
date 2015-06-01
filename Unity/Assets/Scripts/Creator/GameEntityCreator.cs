@@ -40,7 +40,8 @@ public class GameEntityCreator
 			foreach(Guid id in elem.ressources)
 			{ 
 				if(id.CompareTo(new Guid())!=0){
-					GameObject des= ResourceLoader.getInstance().getMeshStruct(id);
+					Asset asset=ResourceLoader.getInstance().getAsset(id);
+					GameObject des= asset.go;
 					des.SetActive(false);
 					GameObject go=new GameObject ();
 					go.AddComponent<Instanciate>();

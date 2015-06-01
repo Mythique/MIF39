@@ -24,9 +24,10 @@ public class Instanciate : MonoBehaviour {
 			instanceOf = new Guid(setId);
 			setId="";
 		}
-		GameObject tmp = ResourceLoader.getInstance ().getMeshStruct (instanceOf);
+		Asset asset = ResourceLoader.getInstance ().getAsset (instanceOf);
+		GameObject tmp = asset.go;
 		tmp.SetActive (true);
-		if(tmp.GetComponent<MeshFilter>().sharedMesh != null)
+		if(asset.loaded)
 		{
 			GameObject go = (GameObject) GameObject.Instantiate(tmp, Vector3.zero, Quaternion.identity);
 			go.transform.SetParent(gameObject.transform, false); 
@@ -35,4 +36,5 @@ public class Instanciate : MonoBehaviour {
 		}
 		tmp.SetActive (false);
 	}
+
 }
