@@ -3,13 +3,14 @@ using System.Collections;
 using System;
 
 public class Instanciate : MonoBehaviour {
-	bool done = false;
+	public bool done = false;
 	public Guid instanceOf;
-	public GameEntity ge; 
+	public String id;
+	public String setId;
 
 	// Use this for initialization
 	void Start () {
-	
+		setId = "";
 	}
 	
 	// Update is called once per frame
@@ -17,6 +18,12 @@ public class Instanciate : MonoBehaviour {
 	{
 		if (done)
 			return;
+
+		id = instanceOf.ToString ();
+		if (setId != "") {
+			instanceOf = new Guid(setId);
+			setId="";
+		}
 		GameObject tmp = ResourceLoader.getInstance ().getMeshStruct (instanceOf);
 		tmp.SetActive (true);
 		if(tmp.GetComponent<MeshFilter>().sharedMesh != null)
@@ -25,7 +32,6 @@ public class Instanciate : MonoBehaviour {
 			go.transform.SetParent(gameObject.transform, false); 
 			go.SetActive(true);
 			done = true;
-			ge.isLoaded=true;
 		}
 		tmp.SetActive (false);
 	}

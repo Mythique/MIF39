@@ -52,9 +52,9 @@ public class ResourceLoader
 			Resource res = ResourceReader.getInstance().readResource(stream);
 			byte[] data = new byte[res.dataSize];
 			int nbRead =stream.Read(data,0,res.dataSize);
-			Debug.Log ("nbRead: " + nbRead+", size: "+res.dataSize);
-			Logger.Debug (res.nom);
-			Logger.Debug (res.ID);
+			//Debug.Log ("nbRead: " + nbRead+", size: "+res.dataSize);
+			//Logger.Debug (res.nom);
+			//Logger.Debug (res.ID);
 			if(res.ID.Equals(WORLD_GUID)){
 				loadWorld(data);
 			}
@@ -91,11 +91,11 @@ public class ResourceLoader
 	void loadMesh (byte[] data)
 	{
 		MeshCreator mc = ResourceReader.getInstance().readMesh (new MemoryStream (data));
-		Logger.Debug ("MeshCreator créé");
+		//Logger.Debug ("MeshCreator créé");
 		GameObject ms = getMeshStruct(mc.id);
-		Logger.Debug ("Get MeshStruct ok");
+		//Logger.Debug ("Get MeshStruct ok");
 		GameObject tmp = mc.create(ref ms);
-		Logger.Debug ("Create Mesh ok");
+		//Logger.Debug ("Create Mesh ok");
 		//ResourceCopier.getInstance().copy (tmp, ms);
 	}
 
@@ -151,7 +151,7 @@ public class ResourceLoader
 		 */
 	public GameObject getMeshStruct(Guid id) 
 	{
-		Logger.Debug("getMeshStruct "+id.ToString());
+		//Logger.Debug("getMeshStruct "+id.ToString());
 		if (!meshes.ContainsKey (id))
 		{
 			/*=lock(objAcreer){
@@ -167,7 +167,7 @@ public class ResourceLoader
 			meshes[id]=obj;
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
-		Logger.Debug("end getMeshStruct "+id.ToString());
+		//Logger.Debug("end getMeshStruct "+id.ToString());
 		return meshes[id];
 	}
 
@@ -192,7 +192,7 @@ public class ResourceLoader
 			materials[id] = new Material(Shader.Find("Diffuse"));
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
-		Logger.Debug("Fin Chargement Mat");
+		//Logger.Debug("Fin Chargement Mat");
 		return materials[id];
 	}
 
@@ -228,18 +228,18 @@ public class ResourceLoader
 
 	public void addObj(GameObject obj ,Guid id){
 		meshes[id]=obj;
-		Logger.Debug("Add GameObj "+id.ToString()+":"+(meshes.ContainsKey(id)));
+		//Logger.Debug("Add GameObj "+id.ToString()+":"+(meshes.ContainsKey(id)));
 
 	}
 
 	public Guid dequeueObjACreer(){
-		Logger.Trace("Count "+objAcreer.Count);
+		//Logger.Trace("Count "+objAcreer.Count);
 		if (objAcreer.Count != 0) {
 			Guid resu=Guid.Empty;
 			lock(objAcreer){
 				resu= objAcreer.Dequeue();
 			}
-			Logger.Debug("Dequeue "+resu.ToString());
+			//Logger.Debug("Dequeue "+resu.ToString());
 			return resu;
 		}
 			

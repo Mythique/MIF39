@@ -32,8 +32,9 @@ public class EntityCreator
 		GameObject go = entity.go;
 		entity.gameEntity = meshId;
 		go.name = realName;
-		go.transform.position = position;
-		go.transform.rotation = rotation;
+		go.transform.SetParent(go.transform, false);
+		go.transform.localPosition= position;
+		go.transform.localRotation = rotation;
 		go.transform.localScale = scale;
 		entity.semantics = semantics;
 		GameObject go2=ResourceLoader.getInstance ().getGameEntity(meshId).go;
@@ -42,7 +43,7 @@ public class EntityCreator
 		//go2.layer = LayerMask.NameToLayer ("cache");
 		go.AddComponent<InstanciateEntity>();
 		go.GetComponent<InstanciateEntity> ().instanceOf = meshId;
-		go.transform.SetParent(go.transform, false);
+
 
 		return entity;
 	}

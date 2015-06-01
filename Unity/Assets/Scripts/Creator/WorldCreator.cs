@@ -40,6 +40,9 @@ public class WorldCreator
 
 		}
 
+		/*GameObject go = loader.getChunk(cells[41]).go;
+		go.transform.SetParent(world.go.transform,false);*/
+
 		return world;
 
 	}

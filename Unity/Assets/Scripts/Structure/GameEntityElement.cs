@@ -12,6 +12,7 @@ public class GameEntityElement
 	public List<String> semantics;
 	public List<Guid> ressources;
 	public String nom;
+	public bool isLoaded{ get; set; }
 
 
 
@@ -23,6 +24,7 @@ public class GameEntityElement
 		this.scale =scale;
 		this.semantics=semantics;
 		this.ressources=ressources;
+		isLoaded = false;
 	}
 }
 
