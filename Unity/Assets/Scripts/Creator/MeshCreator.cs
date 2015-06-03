@@ -66,8 +66,12 @@ public class MeshCreator
 		return -1;
 	}
 
-	public GameObject create(ref GameObject obj)
+	public Asset create(ref Asset asset)
 	{
+
+		GameObject obj = asset.go;
+		obj.AddComponent<MeshFilter>();
+		obj.AddComponent<MeshRenderer>();
 		Logger.Debug ("Create Mesh");
 		bool has_norm = normales.Count > 0;
 		//Debug.Log ("normales du mesh " + has_norm);
@@ -120,7 +124,8 @@ public class MeshCreator
 		meshRenderer.materials = listeMats;
 		mesh.RecalculateNormals ();
 
-		return obj;
+		asset.loaded = true;
+		return asset;
 	}
 
 

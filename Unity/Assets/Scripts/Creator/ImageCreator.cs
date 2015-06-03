@@ -26,7 +26,7 @@ public class ImageCreator
 
 	public Texture2D create(ref Texture2D t2d)
 	{
-		Debug.Log("Texture2D create "+t2d.name);
+		//Debug.Log("Texture2D create "+t2d.name);
 		int widthTot = 0;
 		int heightTot = height;
 		t2d.Resize (width, height);
@@ -46,7 +46,7 @@ public class ImageCreator
 			}
 		}
 		t2d.Apply ();
-		Debug.Log("end Texture2D create");
+		//Debug.Log("end Texture2D create");
 
 		File.WriteAllBytes(@"C:\Users\Unity\Desktop\test.jpg", t2d.EncodeToJPG (100));
 		return t2d;

@@ -62,7 +62,7 @@ public int port=3000;
 		stm.Write (t, 0, t.Length);
 		stm.Write (BitConverter.GetBytes(38), 0, 4);
 		byte[] guid = System.Text.Encoding.ASCII.GetBytes ("{"+param.ToString()+"}");
-		Debug.Log (System.Text.Encoding.ASCII.GetString(guid));
+		//Debug.Log (System.Text.Encoding.ASCII.GetString(guid));
 		stm.Write(guid, 0, guid.Length);
 		stm.Flush ();
 		ServerAnswerManager.getInstance ().addContents (stm);
@@ -99,6 +99,14 @@ public int port=3000;
 			Logger.Error("Error..... " + e.StackTrace);
 		}
 	}
+
+	public Guid readWorldGuid()
+	{
+		ResourceReader.getInstance().readInt32(tcpclnt.GetStream());
+		ResourceReader.getInstance().readInt32(tcpclnt.GetStream());
+		return ResourceReader.getInstance().readGuid(tcpclnt.GetStream());
+	}
+
 
 	/*
 	 * Méthode de déconnexion au serveur

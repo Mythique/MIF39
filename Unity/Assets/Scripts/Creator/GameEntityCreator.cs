@@ -28,24 +28,33 @@ public class GameEntityCreator
 		ResourceLoader loader = ResourceLoader.getInstance ();
 		foreach (GameEntityElement elem in elements) {
 			GameObject elemGo =new GameObject();
-			elemGo.transform.position=elem.position;
-			elemGo.transform.rotation=elem.rotation;
-			elemGo.transform.localScale=elem.scale;
 			elemGo.transform.SetParent(ge.go.transform, false);
+			elemGo.transform.localPosition=elem.position;
+			elemGo.transform.localRotation=elem.rotation;
+			elemGo.transform.localScale=elem.scale;
+			elemGo.AddComponent<CheckElementLoaded>().element=elem;
+			CheckElementLoaded check=elemGo.GetComponent<CheckElementLoaded>();
+			check.list = new List<GameObject> ();
+
+
 			foreach(Guid id in elem.ressources)
 			{ 
 				if(id.CompareTo(new Guid())!=0){
-					GameObject des= ResourceLoader.getInstance().getMeshStruct(id);
+					Asset asset=ResourceLoader.getInstance().getAsset(id);
+					GameObject des= asset.go;
 					des.SetActive(false);
 					GameObject go=new GameObject ();
 					go.AddComponent<Instanciate>();
 					go.GetComponent<Instanciate>().instanceOf = id;
-					go.GetComponent<Instanciate>().ge = ge;
+
+					check.add(go);
 
 					GameObject goi=go;//(GameObject) GameObject.Instantiate(go,Vector3.zero,Quaternion.identity);
 					goi.transform.SetParent(elemGo.transform, false);
 				}
 			}
+			check.ready=true;
+
 		}
 
 		return ge;

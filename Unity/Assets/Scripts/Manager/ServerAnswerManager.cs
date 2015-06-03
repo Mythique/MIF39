@@ -34,12 +34,12 @@ public class ServerAnswerManager{
 
 	public bool addContents(Stream ste){
 
-		Logger.Debug ("Add Contents");
+		//Logger.Debug ("Add Contents");
 		int type, length;
 		type = ResourceReader.getInstance().readInt32 (ste);
-		Debug.Log ("Type: "+type);
+		//Debug.Log ("Type: "+type);
 		length = ResourceReader.getInstance().readInt32 (ste);
-		Debug.Log ("Taille: "+length);
+		//Debug.Log ("Taille: "+length);
 
 		byte[] contenu =new byte[1];
 		if (length != 0) {

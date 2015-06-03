@@ -33,13 +33,20 @@ public class WorldCreator
 		world.spawnPoints = spawnPoints;
 		world.semantics = semantics;
 
+
 		ResourceLoader loader = ResourceLoader.getInstance ();
+		///*
 		foreach (Guid g in cells) {
 			GameObject go = loader.getChunk(g).go;
 			go.transform.SetParent(world.go.transform,false);
 
 		}
 
+		//*/
+		/*
+		GameObject go = loader.getChunk(cells[40]).go;
+		go.transform.SetParent(world.go.transform,false);
+		//*/
 		return world;
 
 	}

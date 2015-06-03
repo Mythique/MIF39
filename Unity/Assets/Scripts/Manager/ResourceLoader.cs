@@ -13,11 +13,12 @@ public class ResourceLoader
 	public static readonly Guid GAME_ENTITY_GUID=new Guid("c2475906-4124-98ad-4077-daca4645492a");
 	public static readonly Guid WORLD_GUID=new Guid("8139645d-dc0d-a852-d77d-89ffe3ae9079");
 	public static readonly Guid IMAGE_GUID=new Guid("0685f590-f83a-0e1f-d272-2a46b8321d24");
+	public static readonly Guid LIGHT_GUID=new Guid("3cf07b05-6309-a9c5-fb18-c6991b107714");
 
 	private static ResourceLoader loader;
 
 	private Dictionary<Guid,World> world;
-	private Dictionary<Guid,GameObject> meshes;
+	private Dictionary<Guid,Asset> assets;
 	private Dictionary<Guid,GameEntity> gameEntities;
 	private Dictionary<Guid,Chunk> chunks;
 	private Dictionary<Guid,Entity> entities;
@@ -29,7 +30,7 @@ public class ResourceLoader
 
 	private ResourceLoader ()
 	{
-		meshes = new Dictionary<Guid,GameObject> ();
+		assets = new Dictionary<Guid,Asset> ();
 		chunks = new Dictionary<Guid, Chunk> ();
 		entities = new Dictionary<Guid, Entity> ();
 		gameEntities = new Dictionary<Guid, GameEntity>();
@@ -52,9 +53,9 @@ public class ResourceLoader
 			Resource res = ResourceReader.getInstance().readResource(stream);
 			byte[] data = new byte[res.dataSize];
 			int nbRead =stream.Read(data,0,res.dataSize);
-			Debug.Log ("nbRead: " + nbRead+", size: "+res.dataSize);
-			Logger.Debug (res.nom);
-			Logger.Debug (res.ID);
+			//Debug.Log ("nbRead: " + nbRead+", size: "+res.dataSize);
+			//Logger.Debug (res.nom);
+			//Logger.Debug (res.ID);
 			if(res.ID.Equals(WORLD_GUID)){
 				loadWorld(data);
 			}
@@ -76,6 +77,9 @@ public class ResourceLoader
 			else if(res.ID.Equals(GAME_ENTITY_GUID)) {
 				loadGameEntity(data);
 			}
+			else if(res.ID.Equals(LIGHT_GUID)) {
+				loadLight(data);
+			}
 			return true;
 		}
 		return false;
@@ -91,11 +95,11 @@ public class ResourceLoader
 	void loadMesh (byte[] data)
 	{
 		MeshCreator mc = ResourceReader.getInstance().readMesh (new MemoryStream (data));
-		Logger.Debug ("MeshCreator créé");
-		GameObject ms = getMeshStruct(mc.id);
-		Logger.Debug ("Get MeshStruct ok");
-		GameObject tmp = mc.create(ref ms);
-		Logger.Debug ("Create Mesh ok");
+		//Logger.Debug ("MeshCreator créé");
+		Asset ms = getAsset (mc.id);
+		//Logger.Debug ("Get MeshStruct ok");
+		Asset tmp = mc.create(ref ms);
+		//Logger.Debug ("Create Mesh ok");
 		//ResourceCopier.getInstance().copy (tmp, ms);
 	}
 
@@ -134,10 +138,10 @@ public class ResourceLoader
 	void loadLight (byte[] data)
 	{
 		LightCreator lc = ResourceReader.getInstance ().readLight (new MemoryStream (data));
-		GameObject light = getMeshStruct (lc.id);
+		Asset light = getAsset (lc.id);
 		lc.create (ref light);
-
 	}
+
 	void loadGameEntity (byte[] data)
 	{
 		GameEntityCreator gec=ResourceReader.getInstance().readGameEntity(new MemoryStream (data));
@@ -149,26 +153,16 @@ public class ResourceLoader
 		 * Juste avant de retourner, on fait la requete au serveur via le client
 		 * Si l'id est dans la map, on le donne et finish
 		 */
-	public GameObject getMeshStruct(Guid id) 
+	public Asset getAsset(Guid id) 
 	{
-		Logger.Debug("getMeshStruct "+id.ToString());
-		if (!meshes.ContainsKey (id))
+		//Logger.Debug("getMeshStruct "+id.ToString());
+		if (!assets.ContainsKey (id))
 		{
-			/*=lock(objAcreer){
-				objAcreer.Enqueue(id);
-			}*/
-			//Logger.Debug("Enqueue "+id.ToString());
-			/*while(!meshes.ContainsKey (id)){
-				Thread.Sleep(100);
-			}*/
-			GameObject obj =new GameObject();
-			obj.AddComponent<MeshFilter>();
-			obj.AddComponent<MeshRenderer>();
-			meshes[id]=obj;
+			assets[id]=new Asset();
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
-		Logger.Debug("end getMeshStruct "+id.ToString());
-		return meshes[id];
+		//Logger.Debug("end getMeshStruct "+id.ToString());
+		return assets[id];
 	}
 
 	public Chunk getChunk(Guid id) {
@@ -192,7 +186,7 @@ public class ResourceLoader
 			materials[id] = new Material(Shader.Find("Diffuse"));
 			Client.getInstance().ask(ServerAnswerManager.Type.SHARED_R, id);
 		}
-		Logger.Debug("Fin Chargement Mat");
+		//Logger.Debug("Fin Chargement Mat");
 		return materials[id];
 	}
 
@@ -226,20 +220,19 @@ public class ResourceLoader
 		return world[id];
 	}
 
-	public void addObj(GameObject obj ,Guid id){
-		meshes[id]=obj;
-		Logger.Debug("Add GameObj "+id.ToString()+":"+(meshes.ContainsKey(id)));
+	public void addObj(Asset obj ,Guid id){
+		assets[id]=obj;
 
 	}
 
 	public Guid dequeueObjACreer(){
-		Logger.Trace("Count "+objAcreer.Count);
+		//Logger.Trace("Count "+objAcreer.Count);
 		if (objAcreer.Count != 0) {
 			Guid resu=Guid.Empty;
 			lock(objAcreer){
 				resu= objAcreer.Dequeue();
 			}
-			Logger.Debug("Dequeue "+resu.ToString());
+			//Logger.Debug("Dequeue "+resu.ToString());
 			return resu;
 		}
 			

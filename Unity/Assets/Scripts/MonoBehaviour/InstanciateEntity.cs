@@ -6,6 +6,7 @@ public class InstanciateEntity : MonoBehaviour {
 	bool done = false;
 	public bool affiche=false;
 	public Guid instanceOf;
+	public String id;
 	
 	// Use this for initialization
 	void Start () {
@@ -20,11 +21,12 @@ public class InstanciateEntity : MonoBehaviour {
 		GameEntity ge = ResourceLoader.getInstance ().getGameEntity (instanceOf);
 		GameObject tmp = ge.go;
 
+		id = instanceOf.ToString ();
 		if(affiche)
 			Debug.Log ("Update GameObject");
 		if(ge.isLoaded)
 		{
-			Debug.Log("Clone gameEntity");
+			Debug.Log("Clone gameEntity "+instanceOf.ToString());
 			GameObject go = (GameObject) GameObject.Instantiate(tmp, Vector3.zero, Quaternion.identity);
 			go.transform.SetParent(gameObject.transform, false); 
 			go.SetActive(true);

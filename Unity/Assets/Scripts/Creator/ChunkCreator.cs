@@ -31,6 +31,8 @@ public class ChunkCreator
 		chunk.objects = objects;
 		go.name = realName;
 		//TODO extends
+
+		Debug.Log (realName+", extends:"+extents.ToString()+", position:"+position.ToString());
 		//go.transform.localScale = extents;
 		go.transform.position = position;
 		chunk.indice = indice;

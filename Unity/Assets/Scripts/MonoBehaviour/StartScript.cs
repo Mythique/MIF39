@@ -34,10 +34,10 @@ public class StartScript : MonoBehaviour {
 		//ms = ResourceLoader.getInstance ().getChunk (new System.Guid ("0688cdf6-a57c-3e81-6efb-f785e0ece2e1")).go;
 		//ms = ResourceLoader.getInstance ().getChunk (new System.Guid ("07458ae8-1b92-ebe6-64ca-0c4ea248d0c4")).go;
 
+		Guid gu = Client.getInstance ().readWorldGuid ();
+		ms = ResourceLoader.getInstance ().getWorld (gu).go;
 
-
-
-		ms = ResourceLoader.getInstance ().getWorld (new System.Guid ("a6423f97-c6a7-7898-73ef-92bb0ffeee1d")).go;
+		//ms = ResourceLoader.getInstance ().getWorld (new System.Guid ("a6423f97-c6a7-7898-73ef-92bb0ffeee1d")).go;
 		ms.transform.parent = obj.transform;
 
 
