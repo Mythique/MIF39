@@ -29,7 +29,7 @@ public class ResourceReader
 		}
 
 		String gu = System.Text.Encoding.ASCII.GetString (guid);
-		////Debug.Log ("gu : " + gu);
+		//Debug.Log ("gu : " + gu);
 		return new Guid(gu);
 	}
 
@@ -610,6 +610,8 @@ public class ResourceReader
 	{
 		Guid ID = readGuid (stream);
 		Int64 size = readInt64 (stream);
+		string name = readString(stream, (int) size);
+		size = readInt64 (stream);
 		string realName = readString(stream, (int) size);
 		LightCreator.Type type = (LightCreator.Type)readInt32 (stream);
 		float intensity = readFloat(stream);

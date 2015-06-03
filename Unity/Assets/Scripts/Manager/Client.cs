@@ -100,6 +100,14 @@ public int port=3000;
 		}
 	}
 
+	public Guid readWorldGuid()
+	{
+		ResourceReader.getInstance().readInt32(tcpclnt.GetStream());
+		ResourceReader.getInstance().readInt32(tcpclnt.GetStream());
+		return ResourceReader.getInstance().readGuid(tcpclnt.GetStream());
+	}
+
+
 	/*
 	 * Méthode de déconnexion au serveur
 	 * @param :

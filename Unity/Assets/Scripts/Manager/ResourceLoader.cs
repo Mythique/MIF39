@@ -140,8 +140,8 @@ public class ResourceLoader
 		LightCreator lc = ResourceReader.getInstance ().readLight (new MemoryStream (data));
 		Asset light = getAsset (lc.id);
 		lc.create (ref light);
-
 	}
+
 	void loadGameEntity (byte[] data)
 	{
 		GameEntityCreator gec=ResourceReader.getInstance().readGameEntity(new MemoryStream (data));

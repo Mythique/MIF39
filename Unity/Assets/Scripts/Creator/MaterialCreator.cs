@@ -80,7 +80,13 @@ public class MaterialCreator
 	
 	public Material create(ref Material material)
 	{
-		material.shader = Shader.Find ("Diffuse");
+		if(Transmission.getR ()==1){
+			material.shader = Shader.Find ("Transparent/Diffuse");
+		}
+		else{
+			material.shader = Shader.Find ("Diffuse");
+		}
+
 		material.SetColor("_Color", new Color(Diffuse.getR(), Diffuse.getG(), Diffuse.getB()));
 		material.SetColor("_SpecColor", new Color(Specular.getR(), Specular.getG(), Specular.getB()));
 

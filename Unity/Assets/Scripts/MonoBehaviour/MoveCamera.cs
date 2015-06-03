@@ -14,6 +14,9 @@ using System.Collections;
 /// - Create a camera. Make the camera a child of the capsule. Reset it's transform.
 /// - Add a MouseLook script to the camera.
 ///   -> Set the mouse look to use LookY. (You want the camera to tilt up and down like a head. The character already turns.)
+using System.Collections.Generic;
+
+
 public class MoveCamera : MonoBehaviour {
 
 	public Camera cam;
@@ -41,8 +44,13 @@ public class MoveCamera : MonoBehaviour {
 	bool pressedShift = false;
 	bool pressedSpace = false;
 	
-	void Update ()
+	void FixedUpdate ()
 	{
+		//debug
+		System.Diagnostics.Stopwatch chrono = new System.Diagnostics.Stopwatch ();
+		chrono.Start ();
+
+		List<long> times = new List<long> ();
 		float xAxisValue = Input.GetAxis("Horizontal");
 		float yAxisValue = 0.0f;
 		float zAxisValue = Input.GetAxis("Vertical");
@@ -50,30 +58,47 @@ public class MoveCamera : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.LeftShift))
 		{
 			pressedShift = true;
-
 		}
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 		if(Input.GetKeyDown("space"))
 		{
 			pressedSpace = true;
 		}
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 		if(Input.GetKeyUp(KeyCode.LeftShift))
 		{
 			pressedShift = false;
-			
 		}
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 		if(Input.GetKeyUp("space"))
 		{
 			pressedSpace = false;
 		}
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 
 		if (pressedShift && !pressedSpace) 
 		{
 			yAxisValue = -1f;
 		}
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
+
 		if (!pressedShift && pressedSpace) 
 		{
 			yAxisValue = 1f;
 		}
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 
 		if (axes == RotationAxes.MouseXAndY)
 		{
@@ -95,19 +120,28 @@ public class MoveCamera : MonoBehaviour {
 			
 			transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
 		}
-
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 
 		if(Camera.current != null)
 		{
 			Camera.current.transform.Translate(new Vector3(xAxisValue*sensitivityMoveX, yAxisValue*sensitivityMoveY, zAxisValue*sensitivityMoveZ));
 		}
-
+		chrono.Stop ();
+		times.Add (chrono.ElapsedTicks);
+		chrono.Start ();
 
 
 		float fov = cam.fieldOfView;
 		fov -= Input.GetAxis ("Mouse ScrollWheel") * sensitivity;
 		fov = Mathf.Clamp (fov, minFov, maxFov);
 		cam.fieldOfView = fov;
+		times.Add (chrono.ElapsedTicks);
+
+		for (int i=0; i < times.Count; i++) {
+			Debug.Log(i +" -> "+ times[i]);
+				}
 	}
 	
 	void Start ()

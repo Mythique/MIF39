@@ -25,6 +25,7 @@ public class LightCreator
 	
 	public Asset create (ref Asset asset)
 	{
+		Debug.Log ("light intensity : " + intensity);
 		Light lightComp = asset.go.AddComponent<Light>();
 		lightComp.intensity = intensity;
 		lightComp.color =new Color(color.x,color.y,color.z);
