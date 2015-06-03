@@ -37,7 +37,9 @@ int main(int argc, char** argv) {
     std::cout << "list got " << list.size() << std::endl;
     QUuid mesh = list[0] ->getUUID();
     std::cout << "entity got" << std::endl;
-
+    QUuid world = ResourceHolder::GetAllByTypeName("World")[0]->getUUID();
+    EncByteBuffer bworld = ::toBuffer(world);
+    bworld.setType(ServerManager::WORLD);
 
 	SharedResourceList listGa = ResourceHolder::GetAllByTypeName("GameObject");
 	QUuid gobj = listGa[0] ->getUUID();
@@ -50,9 +52,17 @@ int main(int argc, char** argv) {
         while(client == fake) {
             client = ServerManager::getInstance()->getConnection()->listen();
         }
-        if(!ServerManager::getInstance()->interpret(client)){
-            client = fake;
-            std::cout << "Effacement du client" << std::endl;
+        if(ServerManager::getInstance()->getConnection()->send(client,bworld)) {
+            while(true){
+                if(!ServerManager::getInstance()->interpret(client)){
+                    client = fake;
+                    std::cout << "Effacement du client" << std::endl;
+                    break;
+                }
+            }
+        }
+        else {
+            std::cout << "Erreur, échec de l'envoi du monde" << std::endl;
         }
     }
 
