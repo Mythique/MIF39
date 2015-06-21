@@ -48,7 +48,7 @@ public class ImageCreator
 		t2d.Apply ();
 		//Debug.Log("end Texture2D create");
 
-		File.WriteAllBytes(@"C:\Users\Unity\Desktop\test.jpg", t2d.EncodeToJPG (100));
+		//File.WriteAllBytes(@"C:\Users\Unity\Desktop\test.jpg", t2d.EncodeToJPG (100));
 		return t2d;
 
 	}
