@@ -11,3 +11,11 @@ Pour lancer l'application :
 * Lancer le client Unity en chargeant la scène <code>Unity/Assets/testLoad.unity</code>
 * Modifier l'adresse IP du serveur (variable associée à la caméra)
 * Lancer la scène !
+
+
+Pour lancer le test IA :
+* Lancer le client Unity en chargeant la scène <code>TestIA/Assets/Scenes/base</code>
+* Changer la variable <code>MarshMallowDLLPath</code> de la classe <code>SimpleMarshmallow</code> dans le script <code>SimpleMarshmallow.cs</code> pour être celui de votre .DLL (présent dans <code>MarshmallowDLL\MarshmallowDLL\bin\Debug</code>
+* Lancer la scène
+
+La lecture de la DLL peut être remplacé par une méthode de téléchargement (disponible dans) <code>WWWAssemblyLoader.cs</code>

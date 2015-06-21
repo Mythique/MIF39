@@ -72,14 +72,16 @@ public class SimpleMarshmallow : MonoBehaviour
 	public Effector controlledDistance = new Effector ();
 	public FuzzyLogic.Engine engine;
 	public FuzzyLogicSolver.Engine solver;
-	//public SimpleMarshmallowController controller;
+
+	//Attention exemple de path a remplacer avec le path actuel
+	private string MarshMallowDLLPath = @"C:\Users\Stu\Documents\FAC\Master\S2\MIF39\MIF39\MarshmallowDLL\MarshmallowDLL\bin\Debug\MarshmallowDLL.dll";
 
 	private int timer;
 	private GameObject wood;
 
 	void Start ()
 	{
-		Assembly a = Assembly.LoadFile (@"C:\Users\Unity\Desktop\Temp\MIF39\MarshmallowDLL\MarshmallowDLL\bin\Debug\MarshmallowDLL.dll");
+		Assembly a = Assembly.LoadFile (MarshMallowDLLPath);
 
 		object o = a.CreateInstance ("intelligenceDLL.Controller");
 
