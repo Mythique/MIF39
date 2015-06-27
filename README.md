@@ -11,6 +11,8 @@ Pour lancer l'application :
 * Lancer le client Unity en chargeant la scène <code>Unity/Assets/testLoad.unity</code>
 * Associer les scripts <code>StartScript</code> et <code>MoveCamera</code> à <code>Main Camera</code>.
 * Modifier l'adresse IP du serveur (variable associée à la caméra)
+* Dans le script <code>Script Start</code> associer la variable <code>Obj</code> au <code>GameObject</code> présent dans la scène.
+* Dans le script <code>Move Camera</code> associer la variable <code>Cam</code> à <code>Main Camera</code>.
 * Lancer la scène !
 
 
