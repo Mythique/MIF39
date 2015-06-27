@@ -9,6 +9,7 @@ Pour lancer l'application :
 <code>make</code>
 * Lancer le serveur se trouvant dans <code>BASE_C++/build/bin/</code> avec la commande <code>./ServerInTheMiddle _Monde.bin_</code>
 * Lancer le client Unity en chargeant la scène <code>Unity/Assets/testLoad.unity</code>
+* Associer les scripts <code>StartScript</code> et <code>MoveCamera</code> à <code>Main Camera</code>.
 * Modifier l'adresse IP du serveur (variable associée à la caméra)
 * Lancer la scène !
 
