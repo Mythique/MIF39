@@ -13,6 +13,7 @@ Pour lancer l'application :
 * Modifier l'adresse IP du serveur (variable associée à la caméra)
 * Dans le script <code>Script Start</code> associer la variable <code>Obj</code> au <code>GameObject</code> présent dans la scène.
 * Dans le script <code>Move Camera</code> associer la variable <code>Cam</code> à <code>Main Camera</code>.
+* Aller dans le menu <code>Edit > Project Settings > Tags and Layers</code> et ajouter un layer nommé <code>cache</code>
 * Lancer la scène !
 
 
